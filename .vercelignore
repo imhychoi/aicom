@@ -1,0 +1,4 @@
+# 공개 배포에서 제외할 파일들 (Slack Webhook 관련 문서/코드, 로컬 설정)
+slack-relay.gs
+SLACK_설정_가이드.md
+.claude

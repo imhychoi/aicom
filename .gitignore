@@ -1,0 +1,7 @@
+# 로컬 설정 / OS 파일
+.claude/
+.DS_Store
+
+# Slack Webhook 관련 (비밀값 노출 방지 — 필요 시 별도 보관)
+slack-relay.gs
+SLACK_설정_가이드.md

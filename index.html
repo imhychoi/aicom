@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>부일전자디자인고 컴퓨터과 | 미래의 IT 세상을 코딩하다</title>
+<meta name="description" content="부산 SW·AI 인재의 산실, 부일전자디자인고등학교 컴퓨터과. 2026 AI 중점학교, 기능경기 입상, 취업·진학 로드맵을 확인하세요." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;800&family=Pretendard:wght@400;500;700;800;900&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --bg:#0a0e1a;
+    --bg-soft:#111726;
+    --card:#151b2c;
+    --card-hover:#1a2238;
+    --line:rgba(255,255,255,.08);
+    --text:#e8ecf4;
+    --muted:#93a0bb;
+    --brand:#4f7cff;
+    --brand2:#7c5cff;
+    --accent:#22d3ee;
+    --lime:#a3e635;
+    --radius:18px;
+    --maxw:1120px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  /* 풀스크린 스냅 스크롤 — 한 섹션이 한 화면에 (모든 화면 높이에 적용) */
+  html{scroll-snap-type:y proximity;scroll-padding-top:0}
+  .hero{scroll-snap-align:start}
+  body{
+    font-family:'Pretendard',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    background:var(--bg);color:var(--text);line-height:1.65;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  }
+  .mono{font-family:'JetBrains Mono',monospace}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+  section{position:relative}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'JetBrains Mono',monospace;font-size:.8rem;font-weight:600;
+    color:var(--accent);letter-spacing:.05em;text-transform:uppercase;
+    padding:6px 14px;border:1px solid rgba(34,211,238,.25);border-radius:999px;
+    background:rgba(34,211,238,.06);margin-bottom:12px;
+  }
+  .eyebrow::before{content:'</>';opacity:.7}
+  h2.title{font-size:clamp(1.55rem,3.3vw,2.25rem);font-weight:900;letter-spacing:-.02em;line-height:1.15}
+  .lead{color:var(--muted);font-size:1rem;margin-top:8px;max-width:640px}
+  /* 모든 섹션이 최소 한 화면(100vh)을 채우고 내용은 세로 중앙 정렬 */
+  .sec-pad{min-height:100vh;padding:74px 0 40px;display:flex;flex-direction:column;justify-content:center;scroll-snap-align:start}
+  /* 화면이 낮으면 폰트·여백을 더 압축해 한 화면에 맞춤 (높이 100vh는 유지) */
+  @media(max-height:820px){
+    .sec-pad{padding:66px 0 32px}
+    h2.title{font-size:clamp(1.35rem,2.8vw,1.8rem)}
+    .lead{font-size:.9rem;margin-top:6px}
+    .eyebrow{margin-bottom:8px}
+    .grid3,.grid2,.roadmap,.stat-grid,.gallery,.career{margin-top:18px;gap:12px}
+    .card,.grade{padding:16px}
+    .card .ic,.grade{}
+    .stat{padding:18px 14px}
+    .stat .n{font-size:2.1rem}
+    .path{padding:18px}
+    .cert-wrap{padding:16px;margin-top:14px}
+    .ai-banner{padding:18px;margin-top:16px}
+    .ai-tools{padding:18px;margin-top:16px}
+    .ai-tools p.desc{margin-bottom:14px}
+    .ai-logo{padding:13px 6px;gap:8px}
+    .ai-logo .lg{width:44px;height:44px}
+    .contact-card{padding:22px;gap:22px;margin-top:16px}
+    .quote{padding:16px}
+    .interviews{margin-top:12px}
+    .grade .num{font-size:2.4rem}
+    .path h3{margin-bottom:8px}
+    .grade h3{margin:4px 0 10px}
+  }
+  @media(max-height:680px){
+    .sec-pad{padding:60px 0 24px}
+    h2.title{font-size:1.3rem}
+    .card p,.grade li,.path li{font-size:.85rem}
+    .stat .n{font-size:1.8rem}
+  }
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+
+  /* ===== NAV ===== */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    padding:16px 0;transition:.3s;backdrop-filter:blur(0px);
+  }
+  nav.scrolled{background:rgba(10,14,26,.82);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding:12px 0}
+  /* 로고를 hero의 "미" 글자와 같은 세로 라인에 맞추기 위해 .wrap과 동일한 컨테이너 사용 */
+  .nav-in{max-width:var(--maxw);margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between}
+  .logo{display:flex;align-items:center;gap:12px;transition:.3s}
+  .logo img{height:46px;width:auto;display:block;filter:drop-shadow(0 1px 4px rgba(255,255,255,.2))}
+  .logo-txt{color:#fff;font-weight:800;font-size:40px;letter-spacing:-.01em;line-height:1;white-space:nowrap}
+  nav.scrolled .logo img{height:40px}
+  nav.scrolled .logo-txt{font-size:34px}
+  @media(max-width:600px){.logo img{height:32px}.logo-txt{font-size:26px}.logo{gap:9px}}
+  .logo .dot{width:11px;height:11px;border-radius:50%;background:var(--brand);box-shadow:0 0 16px var(--brand);animation:pulse 2s infinite}
+  @keyframes pulse{50%{opacity:.4;transform:scale(.85)}}
+  .nav-links{display:flex;gap:28px;font-size:.92rem;color:var(--muted);font-weight:500}
+  .nav-links a:hover{color:var(--text)}
+  .nav-cta{background:var(--brand);color:#fff;padding:9px 18px;border-radius:10px;font-weight:700;font-size:.9rem;transition:.2s}
+  .nav-cta:hover{background:#3d68f0;transform:translateY(-1px)}
+  @media(max-width:860px){.nav-links{display:none}}
+
+  /* ===== HERO ===== */
+  .hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;padding-top:80px}
+  .hero-bg{position:absolute;inset:0;z-index:0}
+  .glow{position:absolute;border-radius:50%;filter:blur(90px);opacity:.5}
+  .glow.g1{width:520px;height:520px;background:var(--brand);top:-120px;right:-80px}
+  .glow.g2{width:440px;height:440px;background:var(--brand2);bottom:-140px;left:-100px;opacity:.4}
+  .grid-bg{position:absolute;inset:0;background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:56px 56px;mask-image:radial-gradient(ellipse 80% 60% at 50% 40%,#000 30%,transparent 75%);opacity:.5}
+  .hero-inner{position:relative;z-index:2;display:grid;grid-template-columns:1.15fr .85fr;gap:50px;align-items:center;width:100%}
+  .hero .greet{font-family:'JetBrains Mono',monospace;color:var(--accent);font-size:1rem;margin-bottom:18px}
+  .hero h1{font-size:clamp(2.4rem,6vw,4.4rem);font-weight:900;letter-spacing:-.03em;line-height:1.08}
+  .hero h1 .grad{background:linear-gradient(120deg,var(--brand),var(--brand2) 45%,var(--accent));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero p.sub{color:var(--muted);font-size:1.15rem;margin-top:22px;max-width:520px}
+  .hero-cta{display:flex;gap:14px;margin-top:36px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:9px;padding:15px 26px;border-radius:12px;font-weight:700;font-size:1rem;transition:.22s;cursor:pointer;border:none}
+  .btn-primary{background:linear-gradient(120deg,var(--brand),var(--brand2));color:#fff;box-shadow:0 10px 30px -8px rgba(79,124,255,.6)}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 40px -8px rgba(79,124,255,.7)}
+  .btn-ghost{background:transparent;color:var(--text);border:1px solid var(--line)}
+  .btn-ghost:hover{border-color:var(--brand);background:rgba(79,124,255,.08)}
+  .hero-stats{display:flex;gap:30px;margin-top:44px;flex-wrap:wrap}
+  .hero-stats .s b{font-size:1.7rem;font-weight:900;color:#fff}
+  .hero-stats .s span{display:block;color:var(--muted);font-size:.85rem;margin-top:2px}
+
+  /* code card */
+  .code-card{background:#0d1220;border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 30px 80px -20px rgba(0,0,0,.6);transform:perspective(1000px) rotateY(-6deg) rotateX(3deg)}
+  .code-top{display:flex;align-items:center;gap:8px;padding:13px 16px;background:#11172a;border-bottom:1px solid var(--line)}
+  .code-top .c{width:12px;height:12px;border-radius:50%}
+  .c.r{background:#ff5f57}.c.y{background:#febc2e}.c.g{background:#28c840}
+  .code-top .fname{margin-left:10px;font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--muted)}
+  .code-body{padding:22px;font-family:'JetBrains Mono',monospace;font-size:.86rem;line-height:2}
+  .code-body .kw{color:#7c5cff}.code-body .fn{color:#22d3ee}.code-body .str{color:#a3e635}.code-body .cm{color:#5a6785}.code-body .var{color:#e8ecf4}
+  .cursor{display:inline-block;width:8px;height:16px;background:var(--accent);vertical-align:middle;animation:blink 1s steps(2) infinite}
+  @keyframes blink{50%{opacity:0}}
+  @media(max-width:900px){.hero-inner{grid-template-columns:1fr}.code-card{display:none}}
+
+  /* ===== marquee ===== */
+  .marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg-soft);padding:18px 0;overflow:hidden;white-space:nowrap}
+  .marquee-track{display:inline-flex;gap:44px;animation:scroll 24s linear infinite;font-family:'JetBrains Mono',monospace;font-weight:600;color:var(--muted);font-size:.95rem}
+  .marquee-track span{display:inline-flex;align-items:center;gap:44px}
+  .marquee-track b{color:var(--accent)}
+  @keyframes scroll{to{transform:translateX(-50%)}}
+
+  /* ===== KEY VISUAL 쇼케이스 ===== */
+  .keyvisual{background:radial-gradient(ellipse 80% 70% at 50% 45%,rgba(79,124,255,.12),transparent 70%)}
+  /* 첫 섹션: 상단 메뉴 영역을 제외한 나머지 공간을 이미지로 꽉 채움 */
+  #top.keyvisual{display:flex;align-items:center;justify-content:center;padding:78px 0 24px;min-height:100vh}
+  #top .wrap{max-width:none;width:100%;padding:0;margin:0;height:auto}
+  @media(max-width:600px){#top.keyvisual{padding-top:64px}}
+  .kv-frame{position:relative;width:100%;display:grid;place-items:center}
+  /* 이미지 높이를 화면 안에 맞춰 아래가 잘리지 않도록 제한 + 모서리 페이드 */
+  .kv-img{display:block;width:auto;height:auto;max-width:100%;max-height:calc(100vh - 110px);border:0;border-radius:0;box-shadow:none;
+    -webkit-mask-image:linear-gradient(to right,transparent 0,#000 3%,#000 97%,transparent 100%),linear-gradient(to bottom,transparent 0,#000 3.5%,#000 96.5%,transparent 100%);
+    -webkit-mask-composite:source-in;
+    mask-image:linear-gradient(to right,transparent 0,#000 3%,#000 97%,transparent 100%),linear-gradient(to bottom,transparent 0,#000 3.5%,#000 96.5%,transparent 100%);
+    mask-composite:intersect}
+
+  /* ===== cards grid ===== */
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:26px}
+  .grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:26px}
+  @media(max-width:800px){.grid3,.grid2{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;transition:.28s}
+  .card:hover{background:var(--card-hover);border-color:rgba(79,124,255,.4);transform:translateY(-4px)}
+  .card .ic{width:52px;height:52px;border-radius:13px;display:grid;place-items:center;font-size:1.5rem;background:linear-gradient(135deg,rgba(79,124,255,.2),rgba(124,92,255,.2));border:1px solid var(--line);margin-bottom:18px}
+  .card h3{font-size:1.25rem;font-weight:800;margin-bottom:8px}
+  .card p{color:var(--muted);font-size:.96rem}
+  .tag{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:.78rem;color:var(--accent);background:rgba(34,211,238,.08);border:1px solid rgba(34,211,238,.2);padding:3px 10px;border-radius:6px;margin:4px 4px 0 0}
+
+  /* AI 중점학교 banner */
+  .ai-banner{margin-top:26px;background:linear-gradient(120deg,rgba(79,124,255,.14),rgba(124,92,255,.14));border:1px solid rgba(124,92,255,.3);border-radius:20px;padding:26px;display:flex;align-items:center;gap:26px;flex-wrap:wrap}
+  .ai-banner .big{font-size:clamp(1.4rem,3vw,2rem);font-weight:900;line-height:1.3}
+  .ai-banner .big .grad{background:linear-gradient(120deg,var(--accent),var(--brand2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .badge-2026{font-family:'JetBrains Mono',monospace;font-weight:800;font-size:.85rem;color:var(--lime);border:1px solid rgba(163,230,53,.4);padding:8px 16px;border-radius:999px;background:rgba(163,230,53,.08);white-space:nowrap}
+
+  /* ===== 최신 AI 도구 쇼케이스 ===== */
+  .ai-tools{margin-top:22px;background:linear-gradient(120deg,rgba(34,211,238,.06),rgba(124,92,255,.07));border:1px solid var(--line);border-radius:20px;padding:24px;position:relative;overflow:hidden}
+  .ai-tools .th{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:4px}
+  .ai-tools .th .live{font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:700;color:var(--lime);border:1px solid rgba(163,230,53,.35);background:rgba(163,230,53,.08);padding:3px 9px;border-radius:999px;display:inline-flex;align-items:center;gap:6px}
+  .ai-tools .th .live::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--lime);box-shadow:0 0 10px var(--lime);animation:pulse 2s infinite}
+  .ai-tools h3{font-size:clamp(1.12rem,2.4vw,1.45rem);font-weight:800;margin:8px 0 6px;line-height:1.3}
+  .ai-tools h3 .grad{background:linear-gradient(120deg,var(--accent),var(--brand2));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .ai-tools p.desc{color:var(--muted);font-size:.93rem;max-width:660px;margin-bottom:20px}
+  .ai-logos{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+  @media(max-width:760px){.ai-logos{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:430px){.ai-logos{grid-template-columns:repeat(2,1fr)}}
+  .ai-logo{display:flex;flex-direction:column;align-items:center;gap:11px;padding:18px 8px;border:1px solid var(--line);border-radius:15px;background:var(--card);transition:transform .28s,border-color .28s,background .28s}
+  .ai-logo:hover{transform:translateY(-5px);border-color:rgba(79,124,255,.45);background:var(--card-hover)}
+  .ai-logo .lg{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;transition:transform .3s}
+  .ai-logo:hover .lg{transform:scale(1.08) rotate(-4deg)}
+  .ai-logo .lg svg{width:56%;height:56%;display:block}
+  .ai-logo .nm{font-weight:700;font-size:.92rem;color:var(--text)}
+  .lg-claude{background:#d97757}
+  .lg-gpt{background:#000}
+  .lg-gemini{background:linear-gradient(135deg,#5b7cff,#9b6dff)}
+  .lg-grok{background:#000}
+  .lg-deep{background:#4d6bfe}
+
+  /* ===== 교육과정 로드맵 ===== */
+  .roadmap{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:26px}
+  @media(max-width:800px){.roadmap{grid-template-columns:1fr}}
+  .grade{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:30px;position:relative;overflow:hidden;transition:.28s}
+  .grade:hover{transform:translateY(-4px);border-color:rgba(79,124,255,.4)}
+  .grade .num{font-family:'JetBrains Mono',monospace;font-size:3.4rem;font-weight:800;color:rgba(255,255,255,.06);position:absolute;top:14px;right:22px;line-height:1}
+  .grade .step{font-family:'JetBrains Mono',monospace;font-size:.8rem;color:var(--accent);font-weight:600}
+  .grade h3{font-size:1.35rem;font-weight:800;margin:6px 0 16px}
+  .grade ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+  .grade li{color:var(--muted);font-size:.95rem;display:flex;gap:9px;align-items:flex-start}
+  .grade li::before{content:'▸';color:var(--brand);font-weight:800}
+
+  /* ===== 교육과정 편성표 ===== */
+  .curri-wrap{margin-top:26px;overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);background:var(--card);-webkit-overflow-scrolling:touch}
+  .curri{width:100%;border-collapse:collapse;min-width:660px;font-size:.9rem}
+  .curri th,.curri td{border:1px solid var(--line);padding:9px 8px;text-align:center;white-space:nowrap}
+  .curri thead th{background:var(--bg-soft);color:var(--text);font-weight:700;font-size:.84rem}
+  .curri tbody th{font-weight:700;color:var(--accent);background:rgba(34,211,238,.05);font-size:.82rem;line-height:1.35}
+  .curri td.subj{text-align:left;color:var(--text);font-weight:600}
+  .curri td.h{color:var(--muted);font-family:'JetBrains Mono',monospace;font-weight:600}
+  .curri td.h.on{color:#fff;background:rgba(79,124,255,.16)}
+  .curri tbody tr:hover td{background:rgba(255,255,255,.03)}
+  .curri tbody tr:hover td.h.on{background:rgba(79,124,255,.24)}
+  .curri-note{color:var(--muted);font-size:.8rem;margin-top:12px}
+  @media(max-height:820px){
+    .curri th,.curri td{padding:6px 7px}
+    .curri{font-size:.82rem}
+    .curri-wrap{margin-top:16px}
+  }
+
+  /* 자격증 */
+  .cert-wrap{margin-top:20px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px}
+  .cert-head{font-size:1.15rem;font-weight:800;margin-bottom:6px}
+  .cert-sub{color:var(--lime);font-family:'JetBrains Mono',monospace;font-size:.85rem;margin-bottom:22px}
+  .cert-cols{display:grid;grid-template-columns:1fr 1fr;gap:26px}
+  @media(max-width:700px){.cert-cols{grid-template-columns:1fr}}
+  .cert-cols h4{font-size:.95rem;color:var(--muted);margin-bottom:12px;font-weight:600}
+  .chip{display:inline-block;background:rgba(79,124,255,.1);border:1px solid rgba(79,124,255,.25);color:#c7d3f5;font-size:.88rem;font-weight:600;padding:8px 14px;border-radius:9px;margin:0 6px 8px 0}
+
+  /* ===== 기능경기 통계 ===== */
+  .skills-sec{background:var(--bg-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .stat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:26px}
+  @media(max-width:800px){.stat-grid{grid-template-columns:repeat(2,1fr)}}
+  .stat{text-align:center;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:24px 18px;transition:.28s}
+  .stat:hover{transform:translateY(-4px);border-color:rgba(34,211,238,.4)}
+  .stat .n{font-family:'JetBrains Mono',monospace;font-size:2.8rem;font-weight:800;background:linear-gradient(120deg,var(--accent),var(--brand));-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1}
+  .stat .l{color:var(--muted);font-size:.92rem;margin-top:10px}
+
+  /* ===== 작품 갤러리 ===== */
+  .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:26px}
+  @media(max-width:800px){.gallery{grid-template-columns:1fr}}
+  .work{position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);aspect-ratio:4/3;cursor:pointer;background:var(--card)}
+  .work .thumb{position:absolute;inset:0;display:grid;place-items:center;font-size:3.5rem;transition:.4s}
+  .work.w1 .thumb{background:linear-gradient(135deg,#1e3a8a,#4f7cff)}
+  .work.w2 .thumb{background:linear-gradient(135deg,#5b21b6,#7c5cff)}
+  .work.w3 .thumb{background:linear-gradient(135deg,#0e7490,#22d3ee)}
+  .work .overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(5,8,16,.96),rgba(5,8,16,.3) 60%,transparent);display:flex;flex-direction:column;justify-content:flex-end;padding:26px;opacity:1}
+  .work .overlay .cat{font-family:'JetBrains Mono',monospace;font-size:.76rem;color:var(--accent);font-weight:600}
+  .work .overlay h3{font-size:1.2rem;font-weight:800;margin:6px 0}
+  .work .overlay p{color:var(--muted);font-size:.9rem;max-height:0;overflow:hidden;opacity:0;transition:.35s}
+  .work:hover .thumb{transform:scale(1.08)}
+  .work:hover .overlay p{max-height:80px;opacity:1;margin-top:4px}
+
+  /* ===== 진로 ===== */
+  .career{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:26px}
+  @media(max-width:800px){.career{grid-template-columns:1fr}}
+  .path{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px}
+  .path .ic{font-size:2rem;margin-bottom:14px}
+  .path h3{font-size:1.4rem;font-weight:800;margin-bottom:14px}
+  .path ul{list-style:none;display:flex;flex-direction:column;gap:11px}
+  .path li{color:var(--muted);display:flex;gap:10px;align-items:flex-start}
+  .path li::before{content:'✓';color:var(--lime);font-weight:800}
+  .interviews{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+  @media(max-width:700px){.interviews{grid-template-columns:1fr}}
+  .quote{background:linear-gradient(120deg,rgba(79,124,255,.1),rgba(124,92,255,.08));border:1px solid var(--line);border-left:3px solid var(--brand);border-radius:14px;padding:20px}
+  .quote p{font-size:1rem;font-style:italic;color:var(--text)}
+  .quote .who{margin-top:14px;font-size:.85rem;color:var(--accent);font-family:'JetBrains Mono',monospace}
+
+  /* ===== 상담 폼 / footer ===== */
+  .contact{background:linear-gradient(180deg,var(--bg),var(--bg-soft))}
+  .contact-card{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:32px;margin-top:26px;display:grid;grid-template-columns:1fr 1fr;gap:32px}
+  @media(max-width:800px){.contact-card{grid-template-columns:1fr;padding:32px}}
+  .form-field{margin-bottom:16px}
+  .form-field label{display:block;font-size:.85rem;color:var(--muted);margin-bottom:7px;font-weight:600}
+  .form-field input,.form-field select{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:11px;padding:13px 15px;color:var(--text);font-size:.95rem;font-family:inherit;transition:.2s}
+  .form-field input:focus,.form-field select:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 3px rgba(79,124,255,.15)}
+  .form-submit{width:100%;justify-content:center;margin-top:8px}
+  .contact-info h3{font-size:1.5rem;font-weight:800;margin-bottom:8px}
+  .contact-info .info-row{display:flex;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line);color:var(--muted)}
+  .contact-info .info-row b{color:var(--text);font-weight:600}
+  .contact-info .info-row .em{font-size:1.2rem;width:26px}
+  .sns{display:flex;gap:12px;margin-top:22px}
+  .sns a{width:44px;height:44px;border-radius:11px;background:var(--bg);border:1px solid var(--line);display:grid;place-items:center;font-size:1.2rem;transition:.2s}
+  .sns a:hover{border-color:var(--brand);transform:translateY(-2px)}
+
+  footer{border-top:1px solid var(--line);padding:36px 0;text-align:center;color:var(--muted);font-size:.88rem}
+  footer .fl{font-weight:800;color:var(--text);margin-bottom:6px}
+
+  /* floating CTA */
+  .float-cta{position:fixed;bottom:26px;right:26px;z-index:90;display:flex;flex-direction:column;gap:10px;align-items:flex-end}
+  .float-cta a{box-shadow:0 12px 30px -6px rgba(79,124,255,.6);animation:floaty 3s ease-in-out infinite}
+  @keyframes floaty{50%{transform:translateY(-6px)}}
+  @media(max-width:600px){.float-cta{bottom:16px;right:16px}.float-cta .btn{padding:12px 18px;font-size:.9rem}}
+
+  .toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(100px);background:var(--lime);color:#0a0e1a;font-weight:700;padding:14px 26px;border-radius:12px;z-index:200;transition:.4s;opacity:0}
+  .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+
+  /* ===== CODERIX-STYLE EFFECTS ===== */
+  /* scroll progress bar */
+  .progress-bar{position:fixed;top:0;left:0;height:3px;width:0;z-index:300;background:linear-gradient(90deg,var(--brand),var(--brand2),var(--accent));box-shadow:0 0 12px var(--brand)}
+
+  /* custom cursor */
+  @media(hover:hover) and (pointer:fine){
+    *{cursor:none !important}
+    .cursor-dot{position:fixed;top:0;left:0;width:7px;height:7px;border-radius:50%;background:var(--accent);z-index:9999;pointer-events:none;transform:translate(-50%,-50%);transition:width .25s,height .25s,background .25s}
+    .cursor-ring{position:fixed;top:0;left:0;width:38px;height:38px;border:1.5px solid rgba(255,255,255,.5);border-radius:50%;z-index:9998;pointer-events:none;transform:translate(-50%,-50%);transition:width .3s,height .3s,border-color .3s,background .3s;display:grid;place-items:center}
+    .cursor-ring .label{font-family:'JetBrains Mono',monospace;font-size:.62rem;font-weight:700;color:#0a0e1a;opacity:0;transition:.25s;text-transform:uppercase;letter-spacing:.05em}
+    body.cur-hover .cursor-ring{width:56px;height:56px;background:transparent;border-color:var(--accent);border-width:2px}
+    body.cur-view .cursor-ring{width:92px;height:92px;background:var(--brand);border-color:var(--brand)}
+    body.cur-view .cursor-ring .label{opacity:1;color:#fff}
+    body.cur-view .cursor-dot{opacity:0}
+    /* 메뉴·버튼 등 클릭 요소 위에서는 손가락(포인터) 커서 표시 */
+    nav a,.nav-cta,.nav-links a,a,button,[role="button"]{cursor:pointer !important}
+    body.cur-point .cursor-dot,
+    body.cur-point .cursor-ring{opacity:0}
+  }
+
+  /* magnetic wrapper */
+  .magnetic{display:inline-block;will-change:transform}
+
+  /* hero line mask reveal */
+  .line-mask{display:block;overflow:hidden}
+  .line-mask > span{display:block;transform:translateY(110%);transition:transform 1s cubic-bezier(.16,1,.3,1)}
+  .loaded .line-mask > span{transform:none}
+  .line-mask.d1 > span{transition-delay:.15s}
+  .line-mask.d2 > span{transition-delay:.30s}
+  .fade-up{opacity:0;transform:translateY(24px);transition:opacity 1s ease .5s,transform 1s cubic-bezier(.16,1,.3,1) .5s}
+  .loaded .fade-up{opacity:1;transform:none}
+  .fade-up.d2{transition-delay:.7s}
+  .fade-up.d3{transition-delay:.9s}
+
+  /* portfolio clip reveal */
+  .work .thumb{clip-path:inset(0 0 100% 0);transition:clip-path .9s cubic-bezier(.16,1,.3,1),transform .4s}
+  .work.in .thumb{clip-path:inset(0 0 0 0)}
+
+  /* section title char/word slide is handled via .reveal already */
+  @media(prefers-reduced-motion:reduce){
+    .line-mask > span,.fade-up,.reveal{transition:none !important;transform:none !important;opacity:1 !important}
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+<div class="cursor-ring" id="cursorRing"><span class="label">VIEW</span></div>
+<div class="cursor-dot" id="cursorDot"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-in">
+    <a href="#top" class="logo"><img src="buil.png" alt="부일전자디자인고등학교" /><span class="logo-txt">컴퓨터과</span></a>
+    <div class="nav-links">
+      <a href="#ai">2026년 AI 중점학교</a>
+      <a href="#curriculum">교육과정</a>
+      <a href="#skills">교육활동</a>
+      <a href="#works">기능경기부</a>
+      <a href="#career">졸업후진로</a>
+    </div>
+  </div>
+</nav>
+
+<!-- KEY VISUAL 쇼케이스 -->
+<section id="top" class="sec-pad keyvisual">
+  <div class="wrap">
+    <div class="kv-frame reveal">
+      <img class="kv-img" src="aicom.png" alt="AI로 상상을 창조하고, 코드로 세상을 게임처럼 만들다 — 부일전자디자인고 컴퓨터과" />
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span>Python <b>·</b> Java <b>·</b> 인공지능 <b>·</b> 빅데이터 <b>·</b> 웹개발 <b>·</b> 앱개발 <b>·</b> 데이터베이스 <b>·</b> 알고리즘 <b>·</b> 정보보안 <b>·</b> 게임개발 <b>·</b></span>
+    <span>Python <b>·</b> Java <b>·</b> 인공지능 <b>·</b> 빅데이터 <b>·</b> 웹개발 <b>·</b> 앱개발 <b>·</b> 데이터베이스 <b>·</b> 알고리즘 <b>·</b> 정보보안 <b>·</b> 게임개발 <b>·</b></span>
+  </div>
+</div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-bg">
+    <div class="grid-bg"></div>
+    <div class="glow g1"></div>
+    <div class="glow g2"></div>
+  </div>
+  <div class="wrap hero-inner">
+    <div>
+      <div class="greet mono fade-up">// Hello, World! 👋</div>
+      <h1>
+        <span class="line-mask"><span>미래의 IT 세상을</span></span>
+        <span class="line-mask d1"><span class="grad">코딩하다.</span></span>
+      </h1>
+      <p class="sub fade-up d2">부산 SW·AI 인재의 산실, <b>부일전자디자인고등학교 컴퓨터과.</b><br>기초부터 실무까지, 코드로 미래를 설계하는 3년을 시작하세요.</p>
+      <!-- <div class="hero-cta fade-up d3">
+        <a href="#contact" class="btn btn-primary magnetic">🚀 입학 상담 신청하기</a>
+        <a href="#curriculum" class="btn btn-ghost magnetic">📄 학과 리플렛 보기</a>
+      </div> -->
+      <div class="hero-stats">
+        <div class="s"><b>2026</b><span>AI 중점학교 지정</span></div>
+        <div class="s"><b>7+</b><span>취득 가능 자격증</span></div>
+        <div class="s"><b>전국</b><span>기능경기 입상</span></div>
+      </div>
+    </div>
+    <div>
+      <div class="code-card">
+        <div class="code-top"><span class="c r"></span><span class="c y"></span><span class="c g"></span><span class="fname">future.py</span></div>
+        <div class="code-body">
+          <span class="cm"># 부일 컴퓨터과에서 시작되는 나의 커리어</span><br>
+          <span class="kw">class</span> <span class="fn">Student</span>:<br>
+          &nbsp;&nbsp;<span class="kw">def</span> <span class="fn">__init__</span>(<span class="var">self</span>):<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="var">self</span>.skills = [<span class="str">"Python"</span>, <span class="str">"AI"</span>, <span class="str">"Web"</span>]<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="var">self</span>.dream = <span class="str">"Developer"</span><br><br>
+          &nbsp;&nbsp;<span class="kw">def</span> <span class="fn">grow</span>(<span class="var">self</span>):<br>
+          &nbsp;&nbsp;&nbsp;&nbsp;<span class="kw">return</span> <span class="str">"무한한 가능성"</span><span class="cursor"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- AI 중점학교 & 동아리 -->
+<section id="ai" class="sec-pad">
+  <div class="wrap">
+    <div class="reveal">
+      <h2 class="title">최신 트렌드를 선도하는 미래형 학과</h2>
+      <p class="lead">인공지능(AI) 기반 교육과 최첨단 기자재로, 시대가 원하는 진짜 개발자를 길러냅니다.</p>
+    </div>
+
+    <div class="ai-banner reveal">
+      <div class="badge-2026">🏅 2026 AI 중점학교</div>
+      <div class="big">"함께 만든 AI, <span class="grad">함께 여는 미래</span>"<br>
+        <span style="font-size:1rem;font-weight:500;color:var(--muted)">교육청 지정 AI 중점학교로서 인공지능 기반 교육 · 최첨단 기자재 · 체험 프로그램을 운영합니다.</span>
+      </div>
+    </div>
+
+    <div class="grid3">
+      <div class="card reveal">
+        <div class="ic">🧩</div>
+        <h3>알고리즘 마스터반</h3>
+        <p>알고리즘 및 문제 해결 능력을 집중 배양하여 코딩 대회와 자격증을 대비합니다.</p>
+        <div style="margin-top:14px"><span class="tag">Algorithm</span><span class="tag">PS</span></div>
+      </div>
+      <div class="card reveal">
+        <div class="ic">🌐</div>
+        <h3>웹/앱 스타트업반</h3>
+        <p>실제 서비스가 가능한 웹·앱을 기획부터 배포까지 직접 개발하는 프로젝트반입니다.</p>
+        <div style="margin-top:14px"><span class="tag">Web</span><span class="tag">App</span><span class="tag">Startup</span></div>
+      </div>
+      <div class="card reveal">
+        <div class="ic">🤖</div>
+        <h3>AI 메이커스반</h3>
+        <p>인공지능 모델 설계와 피지컬 컴퓨팅을 융합해 창의적인 메이커 프로젝트를 완성합니다.</p>
+        <div style="margin-top:14px"><span class="tag">AI</span><span class="tag">IoT</span><span class="tag">Maker</span></div>
+      </div>
+    </div>
+
+    <!-- 최신 생성형 AI 도구 쇼케이스 -->
+    <div class="ai-tools reveal">
+      <div class="th">
+        <span class="live">LIVE · 2026</span>
+        <span class="mono" style="font-size:.78rem;color:var(--accent)">// AI TOOLS WE USE</span>
+      </div>
+      <h3>세계가 주목하는 <span class="grad">생성형 AI</span>를 교실에서 직접 다룹니다</h3>
+      <p class="desc">최신 트렌드에 발맞춰, 글로벌 대표 AI 도구를 수업·프로젝트·기능경기 준비에 실제로 활용합니다. 도구를 '쓸 줄 아는' 것을 넘어 '잘 활용하는' 개발자로 성장합니다.</p>
+      <div class="ai-logos">
+        <!-- Claude -->
+        <div class="ai-logo" title="Anthropic Claude">
+          <span class="lg lg-claude">
+            <svg viewBox="0 0 100 100" fill="#fff" aria-hidden="true">
+              <g>
+                <rect x="46.5" y="8" width="7" height="38" rx="3.5"/>
+                <rect x="46.5" y="8" width="7" height="38" rx="3.5" transform="rotate(30 50 50)"/>
+                <rect x="46.5" y="8" width="7" height="38" rx="3.5" transform="rotate(60 50 50)"/>
+                <rect x="46.5" y="8" width="7" height="38" rx="3.5" transform="rotate(90 50 50)"/>
+                <rect x="46.5" y="8" width="7" height="38" rx="3.5" transform="rotate(120 50 50)"/>
+                <rect x="46.5" y="8" width="7" height="38" rx="3.5" transform="rotate(150 50 50)"/>
+                <rect x="46.5" y="8" width="7" height="38" rx="3.5" transform="rotate(180 50 50)"/>
+                <rect x="46.5" y="8" width="7" height="38" rx="3.5" transform="rotate(210 50 50)"/>
+                <rect x="46.5" y="8" width="7" height="38" rx="3.5" transform="rotate(240 50 50)"/>
+                <rect x="46.5" y="8" width="7" height="38" rx="3.5" transform="rotate(270 50 50)"/>
+                <rect x="46.5" y="8" width="7" height="38" rx="3.5" transform="rotate(300 50 50)"/>
+                <rect x="46.5" y="8" width="7" height="38" rx="3.5" transform="rotate(330 50 50)"/>
+              </g>
+            </svg>
+          </span>
+          <span class="nm">Claude</span>
+        </div>
+        <!-- ChatGPT -->
+        <div class="ai-logo" title="OpenAI ChatGPT">
+          <span class="lg lg-gpt">
+            <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true">
+              <path d="M22.28 9.82a5.98 5.98 0 0 0-.52-4.91 6.05 6.05 0 0 0-6.51-2.9A6.07 6.07 0 0 0 4.98 4.18a5.98 5.98 0 0 0-4 2.9 6.05 6.05 0 0 0 .74 7.1 5.98 5.98 0 0 0 .51 4.91 6.05 6.05 0 0 0 6.51 2.9A5.98 5.98 0 0 0 13.26 24a6.06 6.06 0 0 0 5.77-4.21 5.99 5.99 0 0 0 4-2.9 6.06 6.06 0 0 0-.75-7.07zm-9.02 12.6a4.48 4.48 0 0 1-2.88-1.04l.14-.08 4.78-2.76a.79.79 0 0 0 .39-.68v-6.74l2.02 1.17a.07.07 0 0 1 .04.05v5.58a4.5 4.5 0 0 1-4.49 4.5zM3.6 18.3a4.47 4.47 0 0 1-.53-3.01l.14.08 4.78 2.76a.77.77 0 0 0 .78 0l5.84-3.37v2.33a.08.08 0 0 1-.03.06l-4.83 2.79A4.5 4.5 0 0 1 3.6 18.3zM2.34 7.9a4.49 4.49 0 0 1 2.37-1.98v5.65a.77.77 0 0 0 .39.68l5.81 3.35-2.02 1.17a.08.08 0 0 1-.07 0l-4.83-2.79A4.5 4.5 0 0 1 2.34 7.9zm16.6 3.86-5.84-3.4L15.12 7.2a.08.08 0 0 1 .07 0l4.83 2.79a4.49 4.49 0 0 1-.68 8.1v-5.67a.79.79 0 0 0-.4-.67zm2.01-3.02-.14-.09-4.77-2.78a.78.78 0 0 0-.79 0L9.41 9.23V6.9a.07.07 0 0 1 .03-.06l4.83-2.79a4.5 4.5 0 0 1 6.68 4.66zM8.31 12.86l-2.02-1.16a.08.08 0 0 1-.04-.06V6.07a4.5 4.5 0 0 1 7.38-3.45l-.14.08L8.7 5.46a.79.79 0 0 0-.39.68zm1.1-2.37 2.6-1.5 2.61 1.5v3l-2.6 1.5-2.61-1.5z"/>
+            </svg>
+          </span>
+          <span class="nm">ChatGPT</span>
+        </div>
+        <!-- Gemini -->
+        <div class="ai-logo" title="Google Gemini">
+          <span class="lg lg-gemini">
+            <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true">
+              <path d="M12 1c.35 5.9 5.1 10.65 11 11-5.9.35-10.65 5.1-11 11-.35-5.9-5.1-10.65-11-11C6.9 11.65 11.65 6.9 12 1Z"/>
+            </svg>
+          </span>
+          <span class="nm">Gemini</span>
+        </div>
+        <!-- Grok / xAI -->
+        <div class="ai-logo" title="xAI Grok">
+          <span class="lg lg-grok">
+            <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true">
+              <path d="M5.2 3h3.9l9.7 18h-3.9z"/>
+              <path d="M18.8 3h-3.9L5.2 21h3.9z"/>
+            </svg>
+          </span>
+          <span class="nm">Grok</span>
+        </div>
+        <!-- DeepSeek -->
+        <div class="ai-logo" title="DeepSeek">
+          <span class="lg lg-deep">
+            <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true">
+              <path d="M2.4 13.4c0-3.6 3.7-6 7.5-5.3 1.8.3 3.3-.3 4.6-1.6.9-.9 1.5-2 2.1-3.1.2 1.5 0 3-.7 4.3.9-.2 1.7-.7 2.4-1.4-.2 2-1.4 3.7-3.2 4.6 1.4.5 2.9.4 4.3-.2-1 2-3.2 3.2-5.5 3-2.4 2.3-6.4 2.5-9.2.4a6.2 6.2 0 0 1-1.9-2.3c.9.7 2 1.1 3.2 1.1-1.7-.9-2.9-2.6-3.1-4.5.6.6 1.3 1 2.1 1.2a5 5 0 0 1-2.1-4.1c0-.1 0-.2 0-.3.2 3.2 2.9 5.7 6.1 5.7.1 0 .1 0 .2 0-.6-.3-1-.9-1-1.6 0-1 .8-1.8 1.8-1.8.5 0 1 .2 1.3.6a7.4 7.4 0 0 0 1.4-.1c-.5-.9-1.5-1.5-2.6-1.5-1.4 0-2.7.8-3.3 2-1.3-.1-2.5-.7-3.4-1.7 0 .1 0 .2 0 .3z"/>
+              <circle cx="14.6" cy="9.6" r=".7" fill="#4d6bfe"/>
+            </svg>
+          </span>
+          <span class="nm">DeepSeek</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 교육과정 & 자격증 -->
+<section id="curriculum" class="sec-pad" style="background:var(--bg-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="reveal">
+      <h2 class="title">전공일반부터 실무까지,<br>학년·학기별 교육과정</h2>
+      <p class="lead">기초 전공부터 게임·앱·전자상거래 실무까지, 학년·학기별로 체계적으로 편성된 교육과정입니다.</p>
+    </div>
+
+    <div class="curri-wrap reveal">
+      <table class="curri">
+        <thead>
+          <tr>
+            <th rowspan="2">구분</th>
+            <th rowspan="2">과목</th>
+            <th colspan="2">1학년</th>
+            <th colspan="2">2학년</th>
+            <th colspan="2">3학년</th>
+          </tr>
+          <tr>
+            <th>1학기</th><th>2학기</th>
+            <th>1학기</th><th>2학기</th>
+            <th>1학기</th><th>2학기</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- 전공일반 -->
+          <tr>
+            <th rowspan="5">전공일반</th>
+            <td class="subj">인공지능 기초</td>
+            <td class="h on">2</td><td class="h"></td><td class="h"></td><td class="h"></td><td class="h"></td><td class="h"></td>
+          </tr>
+          <tr>
+            <td class="subj">사무 관리</td>
+            <td class="h on">3</td><td class="h"></td><td class="h"></td><td class="h"></td><td class="h"></td><td class="h"></td>
+          </tr>
+          <tr>
+            <td class="subj">프로그래밍</td>
+            <td class="h"></td><td class="h on">5</td><td class="h"></td><td class="h"></td><td class="h"></td><td class="h"></td>
+          </tr>
+          <tr>
+            <td class="subj">자료 구조</td>
+            <td class="h"></td><td class="h"></td><td class="h on">3</td><td class="h"></td><td class="h"></td><td class="h"></td>
+          </tr>
+          <tr>
+            <td class="subj">컴퓨터 그래픽</td>
+            <td class="h"></td><td class="h"></td><td class="h on">4</td><td class="h"></td><td class="h"></td><td class="h"></td>
+          </tr>
+          <!-- 전공실무 -->
+          <tr>
+            <th rowspan="4">전공실무</th>
+            <td class="subj">응용 프로그래밍 개발</td>
+            <td class="h"></td><td class="h"></td><td class="h on">6</td><td class="h on">8</td><td class="h on">2</td><td class="h on">3</td>
+          </tr>
+          <tr>
+            <td class="subj">데이터 베이스 프로그래밍</td>
+            <td class="h"></td><td class="h"></td><td class="h on">2</td><td class="h on">5</td><td class="h"></td><td class="h"></td>
+          </tr>
+          <tr>
+            <td class="subj">게임 디자인</td>
+            <td class="h"></td><td class="h"></td><td class="h"></td><td class="h"></td><td class="h on">4</td><td class="h on">4</td>
+          </tr>
+          <tr>
+            <td class="subj">게임 프로그래밍 (현장실습)</td>
+            <td class="h"></td><td class="h"></td><td class="h"></td><td class="h"></td><td class="h on">8</td><td class="h on">8</td>
+          </tr>
+          <!-- 전공실무(학점제교과) 한 과목 선택 -->
+          <tr>
+            <th rowspan="3">전공실무<br>(학점제교과)<br>한 과목 선택</th>
+            <td class="subj">스마트 문화 앱 콘텐츠 제작</td>
+            <td class="h"></td><td class="h"></td><td class="h on">6</td><td class="h on">6</td><td class="h"></td><td class="h"></td>
+          </tr>
+          <tr>
+            <td class="subj">응용 프로그래밍 화면 구현</td>
+            <td class="h"></td><td class="h"></td><td class="h on">6</td><td class="h on">6</td><td class="h"></td><td class="h"></td>
+          </tr>
+          <tr>
+            <td class="subj">편집 디자인</td>
+            <td class="h"></td><td class="h"></td><td class="h on">6</td><td class="h on">6</td><td class="h"></td><td class="h"></td>
+          </tr>
+          <!-- 전공실무(학점제교과) 한 과목 선택 -->
+          <tr>
+            <th rowspan="3">전공실무<br>(학점제교과)<br>한 과목 선택</th>
+            <td class="subj">사물 인터넷 서비스 기획</td>
+            <td class="h"></td><td class="h"></td><td class="h"></td><td class="h"></td><td class="h on">6</td><td class="h on">6</td>
+          </tr>
+          <tr>
+            <td class="subj">전자 상거래 실무</td>
+            <td class="h"></td><td class="h"></td><td class="h"></td><td class="h"></td><td class="h on">6</td><td class="h on">6</td>
+          </tr>
+          <tr>
+            <td class="subj">광고 콘텐츠 제작</td>
+            <td class="h"></td><td class="h"></td><td class="h"></td><td class="h"></td><td class="h on">6</td><td class="h on">6</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="curri-note reveal">※ 표의 숫자는 학년·학기별 이수 단위입니다. ‘한 과목 선택’ 그룹은 제시된 과목 중 한 과목을 선택해 이수합니다.</p>
+
+    <div class="cert-wrap reveal">
+      <div class="cert-head">🎓 컴퓨터과 취득 자격증</div>
+      <div class="cert-sub">// 졸업 전 무조건 따는 스펙트럼!</div>
+      <div class="cert-cols">
+        <div>
+          <h4>국가기술자격</h4>
+          <span class="chip">정보처리기능사</span>
+          <span class="chip">웹디자인기능사</span>
+          <span class="chip">전자캐드기능사</span>
+          <span class="chip">컴퓨터활용능력</span>
+          <span class="chip">워드프로세서</span>
+        </div>
+        <div>
+          <h4>공인 / IT 자격</h4>
+          <span class="chip">ITQ</span>
+          <span class="chip">전산회계</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 교육활동 -->
+<section id="skills" class="skills-sec sec-pad">
+  <div class="wrap">
+    <div class="reveal">
+      <h2 class="title">수업을 넘어, 실전으로 성장하는 교육활동</h2>
+      <p class="lead">취업 맞춤반과 동아리반 운영, 각종 개발 대회 도전, 선도학교 프로그램으로 실무 감각을 키웁니다.</p>
+    </div>
+
+    <div class="grid3">
+      <div class="card reveal">
+        <div class="ic">🎯</div>
+        <h3>취업 맞춤반 &amp; 동아리반</h3>
+        <p>진로에 맞춘 취업 맞춤반과 관심사가 모인 동아리반을 운영해, 프로젝트 중심으로 실무 역량을 키웁니다.</p>
+        <div style="margin-top:14px"><span class="tag">Career</span><span class="tag">Club</span></div>
+      </div>
+      <div class="card reveal">
+        <div class="ic">🏆</div>
+        <h3>전국 개발 대회 도전</h3>
+        <p>스마틴앱챌린지, 해카톤 등 다양한 앱·소프트웨어 개발 대회에 도전하며 기획부터 개발까지 실력을 검증합니다.</p>
+        <div style="margin-top:14px"><span class="tag">스마틴앱챌린지</span><span class="tag">해카톤</span></div>
+      </div>
+      <div class="card reveal">
+        <div class="ic">🚀</div>
+        <h3>소프트웨어교육 선도학교</h3>
+        <p>2016년부터 소프트웨어교육 선도학교를 운영하며 쌓아온 노하우로 체계적인 SW 교육을 이어갑니다.</p>
+        <div style="margin-top:14px"><span class="tag">SW 선도학교</span><span class="tag">Since 2016</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 기능경기부 -->
+<section id="works" class="sec-pad">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow">SKILLS COMPETITION</span>
+      <h2 class="title">전국을 무대로 빛나는<br>부일 기능경기부</h2>
+      <p class="lead">정보기술·웹디자인 분야에서 부산지방기능경기대회와 전국기능경기대회에 매년 도전하고 수상합니다.</p>
+    </div>
+
+    <div class="grid3">
+      <div class="card reveal">
+        <div class="ic">💻</div>
+        <h3>정보기술(IT) 분야</h3>
+        <p>프로그래밍과 시스템 구축 실무 능력을 겨루는 정보기술 직종에 출전해 기술력을 증명합니다.</p>
+        <div style="margin-top:14px"><span class="tag">Programming</span><span class="tag">System</span></div>
+      </div>
+      <div class="card reveal">
+        <div class="ic">🎨</div>
+        <h3>웹디자인 및 개발 분야</h3>
+        <p>웹 기획·디자인·개발을 아우르는 종합 역량으로 웹디자인 및 개발 직종에 도전합니다.</p>
+        <div style="margin-top:14px"><span class="tag">Web Design</span><span class="tag">Development</span></div>
+      </div>
+      <div class="card reveal">
+        <div class="ic">🏅</div>
+        <h3>매년 이어지는 수상 전통</h3>
+        <p>부산지방기능경기대회와 전국기능경기대회에서 매년 꾸준히 수상하며 실력을 이어가고 있습니다.</p>
+        <div style="margin-top:14px"><span class="tag">지방기능경기</span><span class="tag">전국기능경기</span></div>
+      </div>
+    </div>
+
+    <div class="grid2">
+      <div class="card reveal">
+        <div class="ic">👨‍🏫</div>
+        <h3>전문 기술 지도 강사 배치</h3>
+        <p>현장 경험이 풍부한 전문 강사가 밀착 지도로 기능경기 선수들의 실력을 끌어올립니다.</p>
+      </div>
+      <div class="card reveal">
+        <div class="ic">🖥️</div>
+        <h3>기능부 전용 실습 환경</h3>
+        <p>대회 환경 그대로 집중 훈련이 가능한 전용 실습 공간에서 실전 감각을 다집니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 진로 -->
+<section id="career" class="sec-pad" style="background:var(--bg-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow">YOUR FUTURE</span>
+      <h2 class="title">졸업 후, 든든한<br>두 갈래의 미래</h2>
+      <p class="lead">취업과 진학, 무엇을 선택하든 부일 컴퓨터과가 탄탄한 길을 열어드립니다.</p>
+    </div>
+
+    <div class="career">
+      <div class="path reveal">
+        <div class="ic">💼</div>
+        <h3>취업 (Employment)</h3>
+        <ul>
+          <li>대기업 · 공기업 S/W 개발직</li>
+          <li>컴퓨터 관련 업체 개발·운영</li>
+          <li>소프트웨어 · 콘텐츠 벤처기업</li>
+          <li>웹/앱 개발 및 IT 서비스 분야</li>
+        </ul>
+      </div>
+      <div class="path reveal">
+        <div class="ic">🎓</div>
+        <h3>진학 (University)</h3>
+        <ul>
+          <li>소프트웨어공학과</li>
+          <li>컴퓨터공학과</li>
+          <li>게임콘텐츠과</li>
+          <li>스마트모바일과</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="interviews">
+      <div class="quote reveal">
+        <p>"인문계 대신 부일을 선택해, 코딩 실력을 키워 OO대학교 컴퓨터공학과에 진학했어요. 실습 위주 수업이 정말 큰 힘이 됐습니다."</p>
+        <div class="who">— OO학번 진학 선배</div>
+      </div>
+      <div class="quote reveal">
+        <p>"재학 중 쌓은 코딩 포트폴리오 덕분에 졸업하자마자 IT 전문 기업 개발자로 취업했습니다. 자격증과 프로젝트 경험이 스펙이 됐어요."</p>
+        <div class="who">— OO학번 취업 선배</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 상담 폼 & footer -->
+<section id="contact" class="contact sec-pad">
+  <div class="wrap">
+    <div class="reveal" style="text-align:center">
+      <span class="eyebrow">GET STARTED</span>
+      <h2 class="title">미래로 향하는 첫 줄의 코드,<br>지금 시작하세요</h2>
+      <p class="lead" style="margin:14px auto 0">간단한 정보만 남겨주시면 입학처에서 친절하게 상담해 드립니다.</p>
+    </div>
+
+    <div class="contact-card reveal">
+      <form id="consultForm">
+        <div class="form-field">
+          <label>이름</label>
+          <input type="text" name="name" placeholder="홍길동" required />
+        </div>
+        <div class="form-field">
+          <label>연락처</label>
+          <input type="tel" name="phone" placeholder="010-1234-5678" required />
+        </div>
+        <div class="form-field">
+          <label>출신 중학교</label>
+          <input type="text" name="school" placeholder="OO중학교" />
+        </div>
+        <div class="form-field">
+          <label>관심 분야</label>
+          <select name="interest">
+            <option>인공지능(AI) / 빅데이터</option>
+            <option>웹 / 앱 개발</option>
+            <option>게임 개발</option>
+            <option>정보보안 / 네트워크</option>
+            <option>기능경기 (선수반)</option>
+            <option>아직 잘 모르겠어요</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary form-submit">상담 신청하기 →</button>
+      </form>
+
+      <div class="contact-info">
+        <h3>입학처 문의</h3>
+        <p style="color:var(--muted);margin-bottom:18px">언제든 편하게 연락 주세요!</p>
+        <div class="info-row"><span class="em">📍</span> <span>부산광역시 사하구 (부일전자디자인고등학교)</span></div>
+        <div class="info-row"><span class="em">☎️</span> <span>대표 <b>051-000-0000</b></span></div>
+        <div class="info-row"><span class="em">🎯</span> <span>입학처 직통 <b>051-000-0001</b></span></div>
+        <div class="info-row"><span class="em">✉️</span> <span><b>admission@buil.hs.kr</b></span></div>
+        <div class="sns">
+          <a href="#" title="Instagram">📷</a>
+          <a href="#" title="YouTube">▶️</a>
+          <a href="#" title="Blog">✍️</a>
+          <a href="#" title="Homepage">🏫</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="fl">부일전자디자인고등학교 컴퓨터과</div>
+    <div>Hello, World! 미래의 IT 세상을 코딩하다.</div>
+    <div style="margin-top:10px;opacity:.6;font-size:.8rem">© 2026 Buil Electronic Design High School. All rights reserved.</div>
+  </div>
+</footer>
+
+<!-- floating CTA -->
+<div class="float-cta">
+  <a href="#contact" class="btn btn-primary magnetic">💬 입학 상담 신청</a>
+</div>
+
+<div class="toast" id="toast">✅ 상담 신청이 접수되었습니다! 곧 연락드릴게요.</div>
+
+<script>
+  // nav scroll
+  const nav = document.getElementById('nav');
+  addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40));
+
+  // reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // count up
+  const countIO = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target, target = +el.dataset.count, suffix = el.dataset.suffix || '';
+      let cur = 0; const step = Math.max(1, Math.ceil(target / 40));
+      const t = setInterval(() => {
+        cur += step;
+        if (cur >= target) { cur = target; clearInterval(t); }
+        el.textContent = cur + suffix;
+      }, 28);
+      countIO.unobserve(el);
+    });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('[data-count]').forEach(el => countIO.observe(el));
+
+  // form → Google Apps Script 로 전송 (Apps Script 가 Slack 으로 중계)
+  // ↓↓↓ Apps Script 웹앱 배포 후 받은 /exec URL 을 붙여넣으세요 ↓↓↓
+  const GAS_URL = 'PASTE_YOUR_APPS_SCRIPT_WEBAPP_URL_HERE';
+  document.getElementById('consultForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const toast = document.getElementById('toast');
+    const btn = form.querySelector('button[type="submit"]');
+    const orig = btn.textContent;
+    btn.disabled = true; btn.textContent = '전송 중…';
+    try {
+      // URL 이 설정된 경우에만 실제 전송 (미설정 시 데모처럼 토스트만 표시)
+      if (GAS_URL && GAS_URL.startsWith('https://script.google.com')) {
+        const body = new URLSearchParams(new FormData(form));
+        // GAS 웹앱은 CORS 응답 헤더가 없어 no-cors 로 전송(응답은 읽지 않음)
+        await fetch(GAS_URL, { method: 'POST', mode: 'no-cors', body });
+      }
+      toast.classList.add('show');
+      form.reset();
+      setTimeout(() => toast.classList.remove('show'), 3500);
+    } catch (err) {
+      alert('전송에 실패했습니다. 잠시 후 다시 시도하시거나 전화로 문의해 주세요.');
+    } finally {
+      btn.disabled = false; btn.textContent = orig;
+    }
+  });
+
+  /* ===== CODERIX-STYLE EFFECTS ===== */
+  // hero mask reveal on load
+  addEventListener('load', () => document.body.classList.add('loaded'));
+  setTimeout(() => document.body.classList.add('loaded'), 600); // fallback
+
+  // scroll progress bar
+  const progress = document.getElementById('progress');
+  addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const p = h.scrollTop / (h.scrollHeight - h.clientHeight);
+    progress.style.width = (p * 100) + '%';
+  }, { passive: true });
+
+  const fine = matchMedia('(hover:hover) and (pointer:fine)').matches;
+  if (fine) {
+    // custom cursor with inertia follower
+    const dot = document.getElementById('cursorDot');
+    const ring = document.getElementById('cursorRing');
+    const ringLabel = ring.querySelector('.label');
+    let mx = innerWidth / 2, my = innerHeight / 2;   // mouse
+    let rx = mx, ry = my;                             // ring (lerped)
+    addEventListener('mousemove', (e) => {
+      mx = e.clientX; my = e.clientY;
+      dot.style.left = mx + 'px'; dot.style.top = my + 'px';
+    });
+    (function loop() {
+      rx += (mx - rx) * 0.18; ry += (my - ry) * 0.18;
+      ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+      requestAnimationFrame(loop);
+    })();
+
+    // hover states
+    document.querySelectorAll('a, button, .card, .grade, .stat, input, select').forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('cur-hover'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('cur-hover'));
+    });
+    // 링크·버튼 위에서는 커스텀 커서를 숨기고 손가락 포인터를 노출
+    document.querySelectorAll('a, button, [role="button"]').forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('cur-point'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('cur-point'));
+    });
+    // VIEW label on portfolio
+    document.querySelectorAll('[data-cursor]').forEach(el => {
+      el.addEventListener('mouseenter', () => { ringLabel.textContent = el.dataset.cursor; document.body.classList.add('cur-view'); });
+      el.addEventListener('mouseleave', () => document.body.classList.remove('cur-view'));
+    });
+
+    // magnetic buttons
+    document.querySelectorAll('.magnetic').forEach(el => {
+      const strength = 0.35;
+      el.addEventListener('mousemove', (e) => {
+        const r = el.getBoundingClientRect();
+        const x = e.clientX - r.left - r.width / 2;
+        const y = e.clientY - r.top - r.height / 2;
+        el.style.transform = `translate(${x * strength}px, ${y * strength}px)`;
+      });
+      el.addEventListener('mouseleave', () => { el.style.transform = ''; });
+    });
+
+    // mouse parallax on hero glow
+    const g1 = document.querySelector('.glow.g1'), g2 = document.querySelector('.glow.g2');
+    addEventListener('mousemove', (e) => {
+      const dx = (e.clientX / innerWidth - .5), dy = (e.clientY / innerHeight - .5);
+      if (g1) g1.style.transform = `translate(${dx * 40}px, ${dy * 40}px)`;
+      if (g2) g2.style.transform = `translate(${dx * -50}px, ${dy * -50}px)`;
+    });
+  }
+</script>
+</body>
+</html>
