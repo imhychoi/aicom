@@ -232,6 +232,10 @@
     .curri{font-size:.82rem}
     .curri-wrap{margin-top:16px}
   }
+  /* 교육과정 이미지(전공 교과 편성표) 프레임 */
+  .curri-img-wrap{margin-top:26px;background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:0 26px 64px -26px rgba(0,0,0,.55)}
+  .curri-img-wrap img{display:block;max-width:100%;max-height:62vh;width:auto;height:auto;margin:0 auto;border-radius:8px}
+  @media(max-height:820px){.curri-img-wrap{padding:12px;margin-top:16px}.curri-img-wrap img{max-height:56vh}}
 
   /* 자격증 */
   .cert-wrap{margin-top:20px;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px}
@@ -551,95 +555,10 @@
       <p class="lead">기초 전공부터 게임·앱·전자상거래 실무까지, 학년·학기별로 체계적으로 편성된 교육과정입니다.</p>
     </div>
 
-    <div class="curri-wrap reveal">
-      <table class="curri">
-        <thead>
-          <tr>
-            <th rowspan="2">구분</th>
-            <th rowspan="2">과목</th>
-            <th colspan="2">1학년</th>
-            <th colspan="2">2학년</th>
-            <th colspan="2">3학년</th>
-          </tr>
-          <tr>
-            <th>1학기</th><th>2학기</th>
-            <th>1학기</th><th>2학기</th>
-            <th>1학기</th><th>2학기</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- 전공일반 -->
-          <tr>
-            <th rowspan="5">전공일반</th>
-            <td class="subj">인공지능 기초</td>
-            <td class="h on">2</td><td class="h"></td><td class="h"></td><td class="h"></td><td class="h"></td><td class="h"></td>
-          </tr>
-          <tr>
-            <td class="subj">사무 관리</td>
-            <td class="h on">3</td><td class="h"></td><td class="h"></td><td class="h"></td><td class="h"></td><td class="h"></td>
-          </tr>
-          <tr>
-            <td class="subj">프로그래밍</td>
-            <td class="h"></td><td class="h on">5</td><td class="h"></td><td class="h"></td><td class="h"></td><td class="h"></td>
-          </tr>
-          <tr>
-            <td class="subj">자료 구조</td>
-            <td class="h"></td><td class="h"></td><td class="h on">3</td><td class="h"></td><td class="h"></td><td class="h"></td>
-          </tr>
-          <tr>
-            <td class="subj">컴퓨터 그래픽</td>
-            <td class="h"></td><td class="h"></td><td class="h on">4</td><td class="h"></td><td class="h"></td><td class="h"></td>
-          </tr>
-          <!-- 전공실무 -->
-          <tr>
-            <th rowspan="4">전공실무</th>
-            <td class="subj">응용 프로그래밍 개발</td>
-            <td class="h"></td><td class="h"></td><td class="h on">6</td><td class="h on">8</td><td class="h on">2</td><td class="h on">3</td>
-          </tr>
-          <tr>
-            <td class="subj">데이터 베이스 프로그래밍</td>
-            <td class="h"></td><td class="h"></td><td class="h on">2</td><td class="h on">5</td><td class="h"></td><td class="h"></td>
-          </tr>
-          <tr>
-            <td class="subj">게임 디자인</td>
-            <td class="h"></td><td class="h"></td><td class="h"></td><td class="h"></td><td class="h on">4</td><td class="h on">4</td>
-          </tr>
-          <tr>
-            <td class="subj">게임 프로그래밍 (현장실습)</td>
-            <td class="h"></td><td class="h"></td><td class="h"></td><td class="h"></td><td class="h on">8</td><td class="h on">8</td>
-          </tr>
-          <!-- 전공실무(학점제교과) 한 과목 선택 -->
-          <tr>
-            <th rowspan="3">전공실무<br>(학점제교과)<br>한 과목 선택</th>
-            <td class="subj">스마트 문화 앱 콘텐츠 제작</td>
-            <td class="h"></td><td class="h"></td><td class="h on">6</td><td class="h on">6</td><td class="h"></td><td class="h"></td>
-          </tr>
-          <tr>
-            <td class="subj">응용 프로그래밍 화면 구현</td>
-            <td class="h"></td><td class="h"></td><td class="h on">6</td><td class="h on">6</td><td class="h"></td><td class="h"></td>
-          </tr>
-          <tr>
-            <td class="subj">편집 디자인</td>
-            <td class="h"></td><td class="h"></td><td class="h on">6</td><td class="h on">6</td><td class="h"></td><td class="h"></td>
-          </tr>
-          <!-- 전공실무(학점제교과) 한 과목 선택 -->
-          <tr>
-            <th rowspan="3">전공실무<br>(학점제교과)<br>한 과목 선택</th>
-            <td class="subj">사물 인터넷 서비스 기획</td>
-            <td class="h"></td><td class="h"></td><td class="h"></td><td class="h"></td><td class="h on">6</td><td class="h on">6</td>
-          </tr>
-          <tr>
-            <td class="subj">전자 상거래 실무</td>
-            <td class="h"></td><td class="h"></td><td class="h"></td><td class="h"></td><td class="h on">6</td><td class="h on">6</td>
-          </tr>
-          <tr>
-            <td class="subj">광고 콘텐츠 제작</td>
-            <td class="h"></td><td class="h"></td><td class="h"></td><td class="h"></td><td class="h on">6</td><td class="h on">6</td>
-          </tr>
-        </tbody>
-      </table>
+    <div class="curri-img-wrap reveal">
+      <img src="subject.png" alt="부일전자디자인고 컴퓨터과 전공 교과 교육과정 — 전공일반·전공실무·전공실무(학점제)의 학년·학기별 편성표" />
     </div>
-    <p class="curri-note reveal">※ 표의 숫자는 학년·학기별 이수 단위입니다. ‘한 과목 선택’ 그룹은 제시된 과목 중 한 과목을 선택해 이수합니다.</p>
+    <p class="curri-note reveal">※ ‘전공실무(학점제)’는 스마트 문화 앱 콘텐츠 제작 · 응용 프로그래밍 화면 구현 · 편집 디자인 중 한 과목을 선택해 2·3학년 공통으로 이수합니다.</p>
 
     <div class="cert-wrap reveal">
       <div class="cert-head">🎓 컴퓨터과 취득 자격증</div>
