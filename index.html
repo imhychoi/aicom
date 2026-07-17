@@ -797,7 +797,7 @@
 
   // form → Google Apps Script 로 전송 (Apps Script 가 Slack 으로 중계)
   // ↓↓↓ Apps Script 웹앱 배포 후 받은 /exec URL 을 붙여넣으세요 ↓↓↓
-  const GAS_URL = 'PASTE_YOUR_APPS_SCRIPT_WEBAPP_URL_HERE';
+  const GAS_URL = 'https://script.google.com/macros/s/AKfycbxz2zyAx_MrVE1zE6J8zQVGvtKjE3Rjv7eB6dXHQozxXZARSIUM1KJ5ZqnXFJcu2ib1wg/exec';
   document.getElementById('consultForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const form = e.target;
