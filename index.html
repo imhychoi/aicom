@@ -767,6 +767,92 @@
             mask-composite: intersect
         }
 
+        /* 모바일 전용 히어로 (텍스트 + 작은 일러스트) — 데스크탑에선 숨김 */
+        .kv-mobile {
+            display: none
+        }
+
+        @media(max-width:700px) {
+            .kv-img {
+                display: none
+            }
+
+            .kv-mobile {
+                display: block;
+                text-align: center;
+                width: 100%
+            }
+
+            .kvm-badge {
+                display: inline-block;
+                font-size: .72rem;
+                font-weight: 700;
+                color: var(--accent);
+                border: 1px solid rgba(34, 211, 238, .3);
+                background: rgba(34, 211, 238, .08);
+                padding: 5px 13px;
+                border-radius: 999px;
+                letter-spacing: .02em;
+                margin-bottom: 14px
+            }
+
+            .kvm-title {
+                font-size: clamp(1.35rem, 6.2vw, 1.85rem);
+                font-weight: 900;
+                line-height: 1.32;
+                letter-spacing: -.02em
+            }
+
+            .kvm-title .grad {
+                background: linear-gradient(120deg, var(--brand), var(--accent));
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent
+            }
+
+            .kvm-sub {
+                color: var(--muted);
+                font-size: .95rem;
+                margin-top: 10px
+            }
+
+            .kvm-img {
+                display: block;
+                width: 100%;
+                max-width: 380px;
+                margin: 20px auto 0;
+                border-radius: 16px;
+                border: 1px solid var(--line);
+                box-shadow: 0 22px 54px -26px rgba(0, 0, 0, .7)
+            }
+
+            .kvm-chips {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 8px;
+                margin-top: 20px
+            }
+
+            .kvm-chips span {
+                font-size: .8rem;
+                font-weight: 600;
+                color: var(--text);
+                background: var(--card);
+                border: 1px solid var(--line);
+                padding: 7px 12px;
+                border-radius: 10px
+            }
+
+            .kvm-tech {
+                margin-top: 16px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: .8rem;
+                color: var(--muted);
+                letter-spacing: .02em
+            }
+        }
+
         /* ===== cards grid ===== */
         .grid3 {
             display: grid;
@@ -2083,6 +2169,20 @@
         <div class="wrap">
             <div class="kv-frame reveal">
                 <img class="kv-img" src="aicom.png" alt="AI로 상상을 창조하고, 코드로 세상을 게임처럼 만들다 — 부일전자디자인고 컴퓨터과" />
+                <!-- 모바일 전용: 텍스트 + 작은 일러스트 -->
+                <div class="kv-mobile">
+                    <span class="kvm-badge">미래를 만드는 우리들의 선택</span>
+                    <h1 class="kvm-title"><span class="grad">AI</span>로 상상을 창조하고,<br>코드로 세상을 게임처럼 만들다</h1>
+                    <p class="kvm-sub">상상을 코드로, 아이디어를 게임으로!</p>
+                    <img class="kvm-img" src="hero-illust.png" alt="AI와 코딩으로 게임을 만드는 부일전자디자인고 컴퓨터과 학생들" />
+                    <div class="kvm-chips">
+                        <span>AI 소프트웨어 개발</span>
+                        <span>게임 기획·프로그래밍</span>
+                        <span>실전 프로젝트</span>
+                        <span>창의적 문제해결</span>
+                    </div>
+                    <div class="kvm-tech">Python · C# · Unreal Engine · Unity</div>
+                </div>
             </div>
         </div>
     </section>
