@@ -1966,107 +1966,6 @@
             box-shadow: 0 0 12px var(--brand)
         }
 
-        /* custom cursor */
-        @media(hover:hover) and (pointer:fine) {
-            * {
-                cursor: none !important
-            }
-
-            .cursor-dot {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 7px;
-                height: 7px;
-                border-radius: 50%;
-                background: var(--accent);
-                z-index: 9999;
-                pointer-events: none;
-                transform: translate(-50%, -50%);
-                transition: width .25s, height .25s, background .25s
-            }
-
-            .cursor-ring {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 38px;
-                height: 38px;
-                border: 1.5px solid rgba(255, 255, 255, .5);
-                border-radius: 50%;
-                z-index: 9998;
-                pointer-events: none;
-                transform: translate(-50%, -50%);
-                transition: width .35s, height .35s, border-color .3s, background .3s, opacity .35s;
-                display: grid;
-                place-items: center
-            }
-
-            .cursor-ring .label {
-                font-family: 'JetBrains Mono', monospace;
-                font-size: .62rem;
-                font-weight: 700;
-                color: #0a0e1a;
-                opacity: 0;
-                transition: .25s;
-                text-transform: uppercase;
-                letter-spacing: .05em
-            }
-
-            body.cur-hover .cursor-ring {
-                width: 56px;
-                height: 56px;
-                background: transparent;
-                border-color: var(--accent);
-                border-width: 2px
-            }
-
-            body.cur-view .cursor-ring {
-                width: 92px;
-                height: 92px;
-                background: var(--brand);
-                border-color: var(--brand)
-            }
-
-            body.cur-view .cursor-ring .label {
-                opacity: 1;
-                color: #fff
-            }
-
-            body.cur-view .cursor-dot {
-                opacity: 0
-            }
-
-            /* 메뉴·버튼 등 클릭 요소(및 하위 요소) 위에서는 손가락(포인터) 커서 표시 */
-            a,
-            a *,
-            button,
-            button *,
-            [role="button"],
-            [role="button"] * {
-                cursor: pointer !important
-            }
-
-            body.cur-point .cursor-dot,
-            body.cur-point .cursor-ring {
-                opacity: 0
-            }
-
-            /* 메뉴·로고 hover 시: 손가락 포인터 + 골드 링이 커지면서 사라짐 */
-            body.cur-nav .cursor-dot {
-                opacity: 0
-            }
-
-            body.cur-nav .cursor-ring {
-                width: 92px;
-                height: 92px;
-                border-color: #e3b24d;
-                border-width: 2px;
-                background: transparent;
-                opacity: 0
-            }
-        }
-
         /* magnetic wrapper */
         .magnetic {
             display: inline-block;
@@ -2142,8 +2041,6 @@
 <body>
 
     <div class="progress-bar" id="progress"></div>
-    <div class="cursor-ring" id="cursorRing"><span class="label">VIEW</span></div>
-    <div class="cursor-dot" id="cursorDot"></div>
 
     <!-- NAV -->
     <nav id="nav">
@@ -2168,7 +2065,8 @@
     <section id="top" class="sec-pad keyvisual">
         <div class="wrap">
             <div class="kv-frame reveal">
-                <img class="kv-img" src="aicom.png" alt="AI로 상상을 창조하고, 코드로 세상을 게임처럼 만들다 — 부일전자디자인고 컴퓨터과" />
+                <video class="kv-img" src="builai.mp4" autoplay loop muted playsinline
+                    aria-label="AI로 상상을 창조하고, 코드로 세상을 게임처럼 만들다 — 부일전자디자인고 컴퓨터과"></video>
                 <!-- 모바일 전용: 텍스트 + 작은 일러스트 -->
                 <div class="kv-mobile">
                     <span class="kvm-badge">미래를 만드는 우리들의 선택</span>
@@ -2648,66 +2546,6 @@
             progress.style.width = (p * 100) + '%';
         }, { passive: true });
 
-        const fine = matchMedia('(hover:hover) and (pointer:fine)').matches;
-        if (fine) {
-            // custom cursor with inertia follower
-            const dot = document.getElementById('cursorDot');
-            const ring = document.getElementById('cursorRing');
-            const ringLabel = ring.querySelector('.label');
-            let mx = innerWidth / 2, my = innerHeight / 2;   // mouse
-            let rx = mx, ry = my;                             // ring (lerped)
-            addEventListener('mousemove', (e) => {
-                mx = e.clientX; my = e.clientY;
-                dot.style.left = mx + 'px'; dot.style.top = my + 'px';
-            });
-            (function loop() {
-                rx += (mx - rx) * 0.18; ry += (my - ry) * 0.18;
-                ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
-                requestAnimationFrame(loop);
-            })();
-
-            // hover states
-            document.querySelectorAll('a, button, .card, .grade, .stat, input, select').forEach(el => {
-                el.addEventListener('mouseenter', () => document.body.classList.add('cur-hover'));
-                el.addEventListener('mouseleave', () => document.body.classList.remove('cur-hover'));
-            });
-            // 링크·버튼 위에서는 커스텀 커서를 숨기고 손가락 포인터를 노출 (메뉴·로고 제외)
-            document.querySelectorAll('a, button, [role="button"]').forEach(el => {
-                if (el.closest('.nav-links') || el.classList.contains('logo')) return;
-                el.addEventListener('mouseenter', () => document.body.classList.add('cur-point'));
-                el.addEventListener('mouseleave', () => document.body.classList.remove('cur-point'));
-            });
-            // 메뉴·로고 hover 시: 커스텀 커서를 2배 확대 + 골드색으로
-            document.querySelectorAll('.nav-links a, .logo').forEach(el => {
-                el.addEventListener('mouseenter', () => document.body.classList.add('cur-nav'));
-                el.addEventListener('mouseleave', () => document.body.classList.remove('cur-nav'));
-            });
-            // VIEW label on portfolio
-            document.querySelectorAll('[data-cursor]').forEach(el => {
-                el.addEventListener('mouseenter', () => { ringLabel.textContent = el.dataset.cursor; document.body.classList.add('cur-view'); });
-                el.addEventListener('mouseleave', () => document.body.classList.remove('cur-view'));
-            });
-
-            // magnetic buttons
-            document.querySelectorAll('.magnetic').forEach(el => {
-                const strength = 0.35;
-                el.addEventListener('mousemove', (e) => {
-                    const r = el.getBoundingClientRect();
-                    const x = e.clientX - r.left - r.width / 2;
-                    const y = e.clientY - r.top - r.height / 2;
-                    el.style.transform = `translate(${x * strength}px, ${y * strength}px)`;
-                });
-                el.addEventListener('mouseleave', () => { el.style.transform = ''; });
-            });
-
-            // mouse parallax on hero glow
-            const g1 = document.querySelector('.glow.g1'), g2 = document.querySelector('.glow.g2');
-            addEventListener('mousemove', (e) => {
-                const dx = (e.clientX / innerWidth - .5), dy = (e.clientY / innerHeight - .5);
-                if (g1) g1.style.transform = `translate(${dx * 40}px, ${dy * 40}px)`;
-                if (g2) g2.style.transform = `translate(${dx * -50}px, ${dy * -50}px)`;
-            });
-        }
     </script>
 </body>
 </html>
