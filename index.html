@@ -367,9 +367,70 @@
             transform: translateY(-1px)
         }
 
+        .nav-toggle {
+            display: none;
+            width: 42px;
+            height: 42px;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            background: none;
+            border: 0;
+            cursor: pointer;
+            padding: 0
+        }
+
+        .nav-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            margin: 0 auto;
+            background: var(--text);
+            border-radius: 2px;
+            transition: .3s
+        }
+
         @media(max-width:860px) {
+            .nav-toggle {
+                display: flex
+            }
+
             .nav-links {
-                display: none
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                gap: 0;
+                background: rgba(10, 14, 26, .98);
+                backdrop-filter: blur(14px);
+                border-bottom: 1px solid var(--line);
+                max-height: 0;
+                overflow: hidden;
+                transition: max-height .35s ease
+            }
+
+            nav.open .nav-links {
+                max-height: 84vh
+            }
+
+            .nav-links a {
+                padding: 15px 24px;
+                font-size: 1rem;
+                color: var(--text);
+                border-top: 1px solid var(--line)
+            }
+
+            nav.open .nav-toggle span:nth-child(1) {
+                transform: translateY(7px) rotate(45deg)
+            }
+
+            nav.open .nav-toggle span:nth-child(2) {
+                opacity: 0
+            }
+
+            nav.open .nav-toggle span:nth-child(3) {
+                transform: translateY(-7px) rotate(-45deg)
             }
         }
 
@@ -669,16 +730,17 @@
         }
 
         #top .wrap {
-            max-width: none;
+            max-width: var(--maxw);
             width: 100%;
-            padding: 0;
-            margin: 0;
+            padding: 0 24px;
+            margin: 0 auto;
             height: auto
         }
 
         @media(max-width:600px) {
             #top.keyvisual {
-                padding-top: 64px
+                padding: 78px 0 36px;
+                min-height: auto
             }
         }
 
@@ -692,7 +754,7 @@
         /* 이미지 높이를 화면 안에 맞춰 아래가 잘리지 않도록 제한 + 모서리 페이드 */
         .kv-img {
             display: block;
-            width: auto;
+            width: 100%;
             height: auto;
             max-width: 100%;
             max-height: calc(100vh - 110px);
@@ -2010,6 +2072,9 @@
                 <a href="#career">졸업후진로</a>
                 <a href="#contact">입학상담</a>
             </div>
+            <button class="nav-toggle" id="navToggle" aria-label="메뉴 열기/닫기" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
         </div>
     </nav>
 
@@ -2043,8 +2108,8 @@
             <div>
                 <div class="greet mono fade-up">// Hello, World! 👋</div>
                 <h1>
-                    <span class="line-mask"><span>미래의 IT 세상을</span></span>
-                    <span class="line-mask d1"><span class="grad">코딩하다.</span></span>
+                    <span class="line-mask"><span>미래의 산업을 이끄는</span></span>
+                    <span class="line-mask d1"><span class="grad">컴퓨터과의 비전</span></span>
                 </h1>
                 <p class="sub fade-up d2">부산 SW·AI 인재의 산실, <b>부일전자디자인고등학교 컴퓨터과.</b><br>기초부터 실무까지, 코드로 미래를 설계하는 3년을
                     시작하세요.</p>
@@ -2053,9 +2118,9 @@
         <a href="#curriculum" class="btn btn-ghost magnetic">📄 학과 리플렛 보기</a>
       </div> -->
                 <div class="hero-stats">
-                    <div class="s"><b>2026</b><span>AI 중점학교 지정</span></div>
-                    <div class="s"><b>7+</b><span>취득 가능 자격증</span></div>
-                    <div class="s"><b>전국</b><span>기능경기 입상</span></div>
+                    <div class="s"><b>2026년</b><span>AI 중점학교 지정</span></div>
+                    <div class="s"><b>AI활용능력</b><span>시작만하면 된다</span></div>
+                    <div class="s"><b>기능인재</b><span>전국최고의 기능인재</span></div>
                 </div>
             </div>
             <div>
@@ -2086,7 +2151,7 @@
     <section id="ai" class="sec-pad">
         <div class="wrap">
             <div class="reveal">
-                <h2 class="title">최신 트렌드를 선도하는 미래형 학과</h2>
+                <h2 class="title">2026학년도 AI 중점학교 운영</h2>
                 <p class="lead">인공지능(AI) 기반 교육과 최첨단 기자재로, 시대가 원하는 진짜 개발자를 길러냅니다.</p>
             </div>
 
@@ -2118,80 +2183,6 @@
                 </div>
             </div>
 
-            <!-- 최신 생성형 AI 도구 쇼케이스 -->
-            <div class="ai-tools reveal">
-                <div class="th">
-                    <span class="live">LIVE · 2026</span>
-                </div>
-                <h3>세계가 주목하는 <span class="grad">생성형 AI</span>를 교실에서 직접 다룹니다</h3>
-                <p class="desc">최신 트렌드에 발맞춰, 글로벌 대표 AI 도구를 수업·프로젝트·기능경기 준비에 실제로 활용합니다. 도구를 '쓸 줄 아는' 것을 넘어 '잘 활용하는' 개발자로
-                    성장합니다.</p>
-                <div class="ai-logos">
-                    <!-- Claude -->
-                    <div class="ai-logo" title="Anthropic Claude">
-                        <span class="lg lg-claude">
-                            <svg viewBox="0 0 100 100" fill="#fff" aria-hidden="true">
-                                <g>
-                                    <rect x="46.5" y="8" width="7" height="38" rx="3.5" />
-                                    <rect x="46.5" y="8" width="7" height="38" rx="3.5" transform="rotate(30 50 50)" />
-                                    <rect x="46.5" y="8" width="7" height="38" rx="3.5" transform="rotate(60 50 50)" />
-                                    <rect x="46.5" y="8" width="7" height="38" rx="3.5" transform="rotate(90 50 50)" />
-                                    <rect x="46.5" y="8" width="7" height="38" rx="3.5" transform="rotate(120 50 50)" />
-                                    <rect x="46.5" y="8" width="7" height="38" rx="3.5" transform="rotate(150 50 50)" />
-                                    <rect x="46.5" y="8" width="7" height="38" rx="3.5" transform="rotate(180 50 50)" />
-                                    <rect x="46.5" y="8" width="7" height="38" rx="3.5" transform="rotate(210 50 50)" />
-                                    <rect x="46.5" y="8" width="7" height="38" rx="3.5" transform="rotate(240 50 50)" />
-                                    <rect x="46.5" y="8" width="7" height="38" rx="3.5" transform="rotate(270 50 50)" />
-                                    <rect x="46.5" y="8" width="7" height="38" rx="3.5" transform="rotate(300 50 50)" />
-                                    <rect x="46.5" y="8" width="7" height="38" rx="3.5" transform="rotate(330 50 50)" />
-                                </g>
-                            </svg>
-                        </span>
-                        <span class="nm">Claude</span>
-                    </div>
-                    <!-- ChatGPT -->
-                    <div class="ai-logo" title="OpenAI ChatGPT">
-                        <span class="lg lg-gpt">
-                            <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true">
-                                <path
-                                    d="M22.28 9.82a5.98 5.98 0 0 0-.52-4.91 6.05 6.05 0 0 0-6.51-2.9A6.07 6.07 0 0 0 4.98 4.18a5.98 5.98 0 0 0-4 2.9 6.05 6.05 0 0 0 .74 7.1 5.98 5.98 0 0 0 .51 4.91 6.05 6.05 0 0 0 6.51 2.9A5.98 5.98 0 0 0 13.26 24a6.06 6.06 0 0 0 5.77-4.21 5.99 5.99 0 0 0 4-2.9 6.06 6.06 0 0 0-.75-7.07zm-9.02 12.6a4.48 4.48 0 0 1-2.88-1.04l.14-.08 4.78-2.76a.79.79 0 0 0 .39-.68v-6.74l2.02 1.17a.07.07 0 0 1 .04.05v5.58a4.5 4.5 0 0 1-4.49 4.5zM3.6 18.3a4.47 4.47 0 0 1-.53-3.01l.14.08 4.78 2.76a.77.77 0 0 0 .78 0l5.84-3.37v2.33a.08.08 0 0 1-.03.06l-4.83 2.79A4.5 4.5 0 0 1 3.6 18.3zM2.34 7.9a4.49 4.49 0 0 1 2.37-1.98v5.65a.77.77 0 0 0 .39.68l5.81 3.35-2.02 1.17a.08.08 0 0 1-.07 0l-4.83-2.79A4.5 4.5 0 0 1 2.34 7.9zm16.6 3.86-5.84-3.4L15.12 7.2a.08.08 0 0 1 .07 0l4.83 2.79a4.49 4.49 0 0 1-.68 8.1v-5.67a.79.79 0 0 0-.4-.67zm2.01-3.02-.14-.09-4.77-2.78a.78.78 0 0 0-.79 0L9.41 9.23V6.9a.07.07 0 0 1 .03-.06l4.83-2.79a4.5 4.5 0 0 1 6.68 4.66zM8.31 12.86l-2.02-1.16a.08.08 0 0 1-.04-.06V6.07a4.5 4.5 0 0 1 7.38-3.45l-.14.08L8.7 5.46a.79.79 0 0 0-.39.68zm1.1-2.37 2.6-1.5 2.61 1.5v3l-2.6 1.5-2.61-1.5z" />
-                            </svg>
-                        </span>
-                        <span class="nm">ChatGPT</span>
-                    </div>
-                    <!-- Gemini -->
-                    <div class="ai-logo" title="Google Gemini">
-                        <span class="lg lg-gemini">
-                            <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true">
-                                <path
-                                    d="M12 1c.35 5.9 5.1 10.65 11 11-5.9.35-10.65 5.1-11 11-.35-5.9-5.1-10.65-11-11C6.9 11.65 11.65 6.9 12 1Z" />
-                            </svg>
-                        </span>
-                        <span class="nm">Gemini</span>
-                    </div>
-                    <!-- Grok / xAI -->
-                    <div class="ai-logo" title="xAI Grok">
-                        <span class="lg lg-grok">
-                            <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true">
-                                <path d="M5.2 3h3.9l9.7 18h-3.9z" />
-                                <path d="M18.8 3h-3.9L5.2 21h3.9z" />
-                            </svg>
-                        </span>
-                        <span class="nm">Grok</span>
-                    </div>
-                    <!-- DeepSeek -->
-                    <div class="ai-logo" title="DeepSeek">
-                        <span class="lg lg-deep">
-                            <svg viewBox="0 0 24 24" fill="#fff" aria-hidden="true">
-                                <path
-                                    d="M2.4 13.4c0-3.6 3.7-6 7.5-5.3 1.8.3 3.3-.3 4.6-1.6.9-.9 1.5-2 2.1-3.1.2 1.5 0 3-.7 4.3.9-.2 1.7-.7 2.4-1.4-.2 2-1.4 3.7-3.2 4.6 1.4.5 2.9.4 4.3-.2-1 2-3.2 3.2-5.5 3-2.4 2.3-6.4 2.5-9.2.4a6.2 6.2 0 0 1-1.9-2.3c.9.7 2 1.1 3.2 1.1-1.7-.9-2.9-2.6-3.1-4.5.6.6 1.3 1 2.1 1.2a5 5 0 0 1-2.1-4.1c0-.1 0-.2 0-.3.2 3.2 2.9 5.7 6.1 5.7.1 0 .1 0 .2 0-.6-.3-1-.9-1-1.6 0-1 .8-1.8 1.8-1.8.5 0 1 .2 1.3.6a7.4 7.4 0 0 0 1.4-.1c-.5-.9-1.5-1.5-2.6-1.5-1.4 0-2.7.8-3.3 2-1.3-.1-2.5-.7-3.4-1.7 0 .1 0 .2 0 .3z" />
-                                <circle cx="14.6" cy="9.6" r=".7" fill="#4d6bfe" />
-                            </svg>
-                        </span>
-                        <span class="nm">DeepSeek</span>
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
 
@@ -2478,6 +2469,22 @@
         // nav scroll
         const nav = document.getElementById('nav');
         addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 40));
+
+        // 모바일 햄버거 메뉴 토글
+        const navToggle = document.getElementById('navToggle');
+        if (navToggle) {
+            navToggle.addEventListener('click', () => {
+                const open = nav.classList.toggle('open');
+                navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+            });
+            // 메뉴 링크 클릭 시 닫기
+            document.querySelectorAll('.nav-links a').forEach(a => {
+                a.addEventListener('click', () => {
+                    nav.classList.remove('open');
+                    navToggle.setAttribute('aria-expanded', 'false');
+                });
+            });
+        }
 
         // reveal on scroll
         const io = new IntersectionObserver((entries) => {
