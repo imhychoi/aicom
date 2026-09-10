@@ -1824,6 +1824,48 @@
             background: rgba(163, 230, 53, .04)
         }
 
+        /* ===== 모바일 섹션 머리표 =====
+           모바일에선 섹션이 길어(1500~2100px) 배경색 차이만으로는 주제 전환이
+           보이지 않는다. 섹션마다 액센트 바 + '번호 · 주제' 라벨을 붙여 구분한다. */
+        @media(max-width:900px) {
+
+            .sec-pad[data-sec] {
+                /* 인접 섹션 배경이 같은 경우(교육과정↔교육활동)를 위해 경계선 강화.
+                   일부 섹션은 인라인 style 로 border-top 이 있어 !important 필요 */
+                border-top: 1px solid rgba(255, 255, 255, .16) !important
+            }
+
+            /* 액센트 바 */
+            .sec-pad[data-sec]::before {
+                content: '';
+                order: -2;
+                align-self: flex-start;
+                width: 44px;
+                height: 3px;
+                margin: 0 24px 11px;
+                border-radius: 999px;
+                background: linear-gradient(90deg, var(--accent), var(--brand2))
+            }
+
+            /* 번호 · 주제 */
+            .sec-pad[data-sec]::after {
+                content: attr(data-num) ' · ' attr(data-sec);
+                order: -1;
+                align-self: flex-start;
+                margin: 0 24px 18px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: .74rem;
+                font-weight: 700;
+                letter-spacing: .05em;
+                color: var(--accent)
+            }
+
+            /* 섹션 사이 여백을 넓혀 덩어리 구분을 분명히 */
+            .sec-pad[data-sec] {
+                padding-bottom: 56px
+            }
+        }
+
         /* ===== 모바일 교육과정 (표 대신 학년·학기 카드) ===== */
         .cur-m {
             display: none
@@ -2653,7 +2695,7 @@
     </header>
 
     <!-- AI 중점학교 & 동아리 -->
-    <section id="ai" class="sec-pad">
+    <section id="ai" class="sec-pad" data-num="01" data-sec="AI 중점학교">
         <div class="wrap">
             <div class="reveal">
                 <h2 class="title">2026학년도 AI 중점학교 운영</h2>
@@ -2716,7 +2758,7 @@
     </section>
 
     <!-- 교육과정 & 자격증 -->
-    <section id="curriculum" class="sec-pad"
+    <section id="curriculum" class="sec-pad" data-num="02" data-sec="교육과정"
         style="background:var(--bg-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
         <div class="wrap">
             <div class="reveal">
@@ -2878,7 +2920,7 @@
     </section>
 
     <!-- 교육활동 -->
-    <section id="skills" class="skills-sec sec-pad">
+    <section id="skills" class="skills-sec sec-pad" data-num="03" data-sec="교육활동">
         <div class="wrap">
             <div class="reveal">
                 <h2 class="title">수업을 넘어, 실전으로 성장하는 교육활동</h2>
@@ -2955,7 +2997,7 @@
     </section>
 
     <!-- 기능경기부 -->
-    <section id="works" class="sec-pad">
+    <section id="works" class="sec-pad" data-num="04" data-sec="기능경기부">
         <div class="wrap">
             <div class="reveal">
                 <h2 class="title">전공 심화 기능경기부</h2>
@@ -3001,7 +3043,7 @@
     </section>
 
     <!-- 진로 -->
-    <section id="career" class="sec-pad"
+    <section id="career" class="sec-pad" data-num="05" data-sec="졸업 후 진로"
         style="background:var(--bg-soft);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
         <div class="wrap">
             <div class="reveal">
@@ -3046,7 +3088,7 @@
     </section>
 
     <!-- 상담 폼 & footer -->
-    <section id="contact" class="contact sec-pad">
+    <section id="contact" class="contact sec-pad" data-num="06" data-sec="입학 상담">
         <div class="wrap">
             <div class="reveal" style="text-align:center">
                 <h2 class="title">미래로 향하는 첫 줄의 코드, 지금 시작하세요</h2>
