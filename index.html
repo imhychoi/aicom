@@ -1699,7 +1699,8 @@
         /* ===== 교육과정 편성표 (다크 테마 v2) ===== */
         .cur2-wrap {
             margin-top: 24px;
-            overflow: hidden;
+            /* 900px 바로 위 구간에서 표가 빡빡하면 가로 스크롤로 열람 가능하게 */
+            overflow-x: auto;
             border: 1px solid var(--line);
             border-radius: var(--radius);
             background: var(--card)
@@ -1821,6 +1822,116 @@
 
         .cur2 td.selbox {
             background: rgba(163, 230, 53, .04)
+        }
+
+        /* ===== 모바일 교육과정 (표 대신 학년·학기 카드) ===== */
+        .cur-m {
+            display: none
+        }
+
+        @media(max-width:900px) {
+
+            /* 좁은 화면에서 7열 표는 과목명이 셀을 넘쳐 겹치므로 카드로 대체 */
+            .cur2-wrap {
+                display: none
+            }
+
+            .cur-m {
+                display: grid;
+                gap: 12px;
+                margin-top: 20px
+            }
+        }
+
+        .cur-m .yr {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            overflow: hidden
+        }
+
+        .cur-m .yr>h3 {
+            background: var(--bg-soft);
+            border-bottom: 1px solid var(--line);
+            padding: 9px 14px;
+            font-size: .95rem;
+            font-weight: 800
+        }
+
+        .cur-m .tm {
+            padding: 12px 14px
+        }
+
+        .cur-m .tm+.tm {
+            border-top: 1px dashed var(--line)
+        }
+
+        .cur-m .tm>h4 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .7rem;
+            font-weight: 600;
+            color: var(--muted);
+            letter-spacing: .04em;
+            margin-bottom: 9px
+        }
+
+        .cur-m .grp+.grp {
+            margin-top: 12px
+        }
+
+        .cur-m .gl {
+            display: inline-block;
+            font-size: .68rem;
+            font-weight: 700;
+            margin-bottom: 6px
+        }
+
+        .cur-m .cat-a .gl {
+            color: var(--accent)
+        }
+
+        .cur-m .cat-b .gl {
+            color: #a9c0ff
+        }
+
+        .cur-m .schip {
+            /* 표용 세로 배치 규칙(max-width:760px)을 덮어 카드에선 가로 유지 */
+            flex-direction: row;
+            align-items: center;
+            gap: 10px;
+            font-size: .92rem;
+            padding: 8px 10px;
+            border-radius: 9px;
+            margin-bottom: 6px
+        }
+
+        .cur-m .schip .u {
+            font-size: .72rem;
+            padding: 2px 7px
+        }
+
+        .cur-m .schip:last-child {
+            margin-bottom: 0
+        }
+
+        /* 학점제 선택 카드 */
+        .cur-m .yr.sel {
+            border-color: rgba(163, 230, 53, .3)
+        }
+
+        .cur-m .yr.sel>h3 {
+            color: var(--lime);
+            background: rgba(163, 230, 53, .07)
+        }
+
+        .cur-m .yr.sel .desc {
+            padding: 12px 14px 0;
+            color: var(--muted);
+            font-size: .85rem
+        }
+
+        .cur-m .yr.sel .list {
+            padding: 10px 14px 14px
         }
 
         .selbox .seltitle {
@@ -2690,6 +2801,78 @@
                     </tbody>
                 </table>
             </div>
+            <!-- 모바일 전용 표시 (900px 이하). 위 표와 내용이 동일하므로 과목·단위를 고칠 때 반드시 함께 수정할 것 -->
+            <div class="cur-m reveal">
+                <article class="yr">
+                    <h3>1학년</h3>
+                    <div class="tm">
+                        <h4>1학기</h4>
+                        <div class="grp cat-a"><span class="gl">전공일반</span>
+                            <div class="schip"><span>인공지능 기초</span><span class="u">2</span></div>
+                            <div class="schip"><span>사무 관리</span><span class="u">3</span></div>
+                        </div>
+                    </div>
+                    <div class="tm">
+                        <h4>2학기</h4>
+                        <div class="grp cat-a"><span class="gl">전공일반</span>
+                            <div class="schip"><span>프로그래밍</span><span class="u">5</span></div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="yr">
+                    <h3>2학년</h3>
+                    <div class="tm">
+                        <h4>1학기</h4>
+                        <div class="grp cat-a"><span class="gl">전공일반</span>
+                            <div class="schip"><span>자료 구조</span><span class="u">3</span></div>
+                            <div class="schip"><span>컴퓨터 그래픽</span><span class="u">4</span></div>
+                        </div>
+                        <div class="grp cat-b"><span class="gl">전공실무</span>
+                            <div class="schip"><span>응용 프로그래밍 개발</span><span class="u">6</span></div>
+                            <div class="schip"><span>데이터베이스 프로그래밍</span><span class="u">2</span></div>
+                        </div>
+                    </div>
+                    <div class="tm">
+                        <h4>2학기</h4>
+                        <div class="grp cat-b"><span class="gl">전공실무</span>
+                            <div class="schip"><span>응용 프로그래밍 개발</span><span class="u">8</span></div>
+                            <div class="schip"><span>데이터베이스 프로그래밍</span><span class="u">5</span></div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="yr">
+                    <h3>3학년</h3>
+                    <div class="tm">
+                        <h4>1학기</h4>
+                        <div class="grp cat-b"><span class="gl">전공실무</span>
+                            <div class="schip"><span>응용 프로그래밍 개발</span><span class="u">2</span></div>
+                            <div class="schip"><span>게임 디자인</span><span class="u">4</span></div>
+                            <div class="schip"><span>게임 프로그래밍</span><span class="u">8</span></div>
+                        </div>
+                    </div>
+                    <div class="tm">
+                        <h4>2학기</h4>
+                        <div class="grp cat-b"><span class="gl">전공실무</span>
+                            <div class="schip"><span>응용 프로그래밍 개발</span><span class="u">3</span></div>
+                            <div class="schip"><span>게임 디자인</span><span class="u">4</span></div>
+                            <div class="schip"><span>게임 프로그래밍</span><span class="u">8</span></div>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="yr sel cat-c">
+                    <h3>전공실무 (학점제) · 2·3학년 공통</h3>
+                    <p class="desc">아래 세 과목 중 <b>한 과목</b>을 선택해 2·3학년 공통으로 이수합니다.</p>
+                    <div class="list">
+                        <div class="schip"><span>스마트 문화 앱 콘텐츠 제작</span><span class="u">6</span></div>
+                        <div class="schip"><span>응용 프로그래밍 화면 구현</span><span class="u">6</span></div>
+                        <div class="schip"><span>편집 디자인</span><span class="u">6</span></div>
+                    </div>
+                </article>
+            </div>
+
             <p class="curri-note reveal">※ 숫자는 학년·학기별 이수 단위입니다. ‘전공실무(학점제)’는 세 과목 중 한 과목을 선택해 2·3학년 공통으로 이수합니다.</p>
         </div>
     </section>
