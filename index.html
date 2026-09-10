@@ -124,7 +124,7 @@
         /* 화면이 낮으면 폰트·여백을 더 압축해 한 화면에 맞춤 (높이 100vh는 유지) */
         @media(max-height:820px) {
             .sec-pad {
-                padding: 66px 0 32px
+                padding: 66px 0 24px
             }
 
             h2.title {
@@ -874,6 +874,11 @@
             .grid2 {
                 grid-template-columns: 1fr
             }
+
+            /* 1단으로 쌓이면 사진이 지나치게 커지므로 높이 상한 */
+            .card .ph {
+                max-height: 200px
+            }
         }
 
         .card {
@@ -888,6 +893,28 @@
             background: var(--card-hover);
             border-color: rgba(79, 124, 255, .4);
             transform: translateY(-4px)
+        }
+
+        /* 카드 상단 현장 사진 (AI 중점학교 반별 카드) */
+        .card .ph {
+            display: block;
+            width: 100%;
+            /* width/height 속성이 CSS height 로 매핑되므로 auto 로 풀어야 aspect-ratio 가 적용됨 */
+            height: auto;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            max-height: 132px;
+            border-radius: 12px;
+            border: 1px solid var(--line);
+            background: var(--bg-soft);
+            margin-bottom: 14px;
+            cursor: zoom-in;
+            filter: saturate(.94) brightness(.96);
+            transition: filter .28s
+        }
+
+        .card:hover .ph {
+            filter: none
         }
 
         .card .ic {
@@ -925,17 +952,48 @@
             margin: 4px 4px 0 0
         }
 
-        /* AI 중점학교 banner */
+        /* AI 중점학교 banner — 2026 부산 AI 교육박람회 부스 현장 사진 배경 */
         .ai-banner {
             margin-top: 26px;
-            background: linear-gradient(120deg, rgba(79, 124, 255, .14), rgba(124, 92, 255, .14));
+            background:
+                linear-gradient(100deg, rgba(10, 14, 26, .95) 0%, rgba(10, 14, 26, .84) 46%, rgba(17, 23, 38, .5) 100%),
+                url('images/ai-hero.webp') center 42% / cover no-repeat;
             border: 1px solid rgba(124, 92, 255, .3);
             border-radius: 20px;
-            padding: 26px;
+            padding: 28px 30px 38px;
             display: flex;
             align-items: center;
             gap: 26px;
-            flex-wrap: wrap
+            flex-wrap: wrap;
+            position: relative
+        }
+
+        .ai-banner .cap {
+            position: absolute;
+            right: 16px;
+            bottom: 12px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .68rem;
+            color: rgba(232, 236, 244, .55);
+            letter-spacing: .01em
+        }
+
+        @media(max-width:800px) {
+            .ai-banner .cap {
+                position: static;
+                margin-top: 4px
+            }
+        }
+
+        @media(max-width:800px) {
+
+            /* 모바일에선 세로로 쌓이므로 사진이 텍스트를 방해하지 않게 더 어둡게 */
+            .ai-banner {
+                background:
+                    linear-gradient(180deg, rgba(10, 14, 26, .92) 0%, rgba(10, 14, 26, .88) 100%),
+                    url('images/ai-hero.webp') center / cover no-repeat;
+                padding: 22px
+            }
         }
 
         .ai-banner .big {
@@ -949,6 +1007,344 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent
+        }
+
+        /* 박람회 현장 사진 스트립 */
+        .ai-strip {
+            display: grid;
+            grid-auto-flow: column;
+            grid-auto-columns: minmax(0, 1fr);
+            gap: 12px;
+            margin-top: 18px
+        }
+
+        .ai-strip img {
+            display: block;
+            width: 100%;
+            height: auto;
+            aspect-ratio: 3/2;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 1px solid var(--line);
+            background: var(--bg-soft);
+            cursor: zoom-in;
+            filter: saturate(.9) brightness(.8);
+            transition: filter .28s, transform .28s
+        }
+
+        .ai-strip img:hover {
+            filter: none;
+            transform: translateY(-3px)
+        }
+
+        /* 좁은 화면에선 가로 스크롤 띠로 전환 */
+        @media(max-width:800px) {
+            .ai-strip {
+                grid-auto-columns: 45%;
+                overflow-x: auto;
+                scroll-snap-type: x proximity;
+                -webkit-overflow-scrolling: touch;
+                padding-bottom: 6px
+            }
+
+            .ai-strip img {
+                scroll-snap-align: start;
+                filter: none
+            }
+        }
+
+        /* 화면 높이별 압축 — 컴포넌트 정의 뒤에 두어야 실제로 적용됨 */
+        @media(max-height:860px) {
+            .ai-banner {
+                padding: 16px 22px 30px;
+                margin-top: 18px
+            }
+
+            .card .ph {
+                max-height: 120px;
+                margin-bottom: 12px
+            }
+
+            .ai-strip {
+                margin-top: 10px;
+                gap: 10px
+            }
+
+            .ai-strip img {
+                max-height: 100px
+            }
+        }
+
+        @media(max-height:740px) {
+            .ai-banner {
+                padding: 14px 20px 28px;
+                margin-top: 14px
+            }
+
+            .card .ph {
+                max-height: 96px;
+                margin-bottom: 10px
+            }
+
+            .ai-strip {
+                margin-top: 8px;
+                gap: 8px
+            }
+
+            .ai-strip img {
+                max-height: 82px
+            }
+        }
+
+        @media(max-height:680px) {
+            .card .ph {
+                max-height: 78px
+            }
+
+            .ai-strip img {
+                max-height: 68px
+            }
+        }
+
+        /* ===== 학점제 선택 수업 ===== */
+        .credit-head {
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 8px 14px;
+            margin-top: 30px
+        }
+
+        .credit-head h3 {
+            font-size: 1.2rem;
+            font-weight: 800
+        }
+
+        .credit-head .note {
+            color: var(--muted);
+            font-size: .9rem
+        }
+
+        .credit-head .note b {
+            color: var(--lime);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .85rem
+        }
+
+        .credit {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin-top: 14px
+        }
+
+        .subj {
+            display: flex;
+            gap: 14px;
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            padding: 16px;
+            transition: .28s
+        }
+
+        .subj:hover {
+            background: var(--card-hover);
+            border-color: rgba(79, 124, 255, .4);
+            transform: translateY(-4px)
+        }
+
+        /* 전단지 썸네일(세로형) */
+        .subj .flyer {
+            flex: 0 0 auto;
+            width: 96px;
+            height: auto;
+            aspect-ratio: 1055/1491;
+            object-fit: cover;
+            object-position: top;
+            border-radius: 8px;
+            border: 1px solid var(--line);
+            background: var(--bg-soft);
+            cursor: zoom-in;
+            filter: saturate(.95) brightness(.92);
+            transition: filter .28s
+        }
+
+        .subj:hover .flyer {
+            filter: none
+        }
+
+        /* 전단지가 없는 과목용 아이콘 패널 */
+        .subj .noflyer {
+            flex: 0 0 auto;
+            width: 96px;
+            aspect-ratio: 1055/1491;
+            border-radius: 8px;
+            border: 1px solid var(--line);
+            background: linear-gradient(150deg, rgba(79, 124, 255, .18), rgba(124, 92, 255, .18));
+            display: grid;
+            place-items: center;
+            align-content: center;
+            gap: 10px;
+            text-align: center
+        }
+
+        .subj .noflyer .em {
+            font-size: 2.4rem;
+            line-height: 1
+        }
+
+        .subj .noflyer .lbl {
+            font-size: .68rem;
+            font-weight: 700;
+            color: var(--muted);
+            line-height: 1.35
+        }
+
+        .subj .body {
+            min-width: 0
+        }
+
+        .subj h4 {
+            font-size: 1.05rem;
+            font-weight: 800;
+            margin-bottom: 2px
+        }
+
+        .subj .kind {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: .7rem;
+            color: var(--accent);
+            border: 1px solid rgba(34, 211, 238, .25);
+            background: rgba(34, 211, 238, .07);
+            border-radius: 999px;
+            padding: 2px 9px;
+            margin-bottom: 8px
+        }
+
+        .subj .kind.share {
+            color: var(--lime);
+            border-color: rgba(163, 230, 53, .3);
+            background: rgba(163, 230, 53, .07)
+        }
+
+        .subj p {
+            color: var(--muted);
+            font-size: .88rem;
+            line-height: 1.55
+        }
+
+        .subj .tag {
+            font-size: .7rem;
+            padding: 2px 8px
+        }
+
+        @media(max-width:900px) {
+            .credit {
+                grid-template-columns: 1fr
+            }
+
+            .subj .flyer,
+            .subj .noflyer {
+                width: 84px
+            }
+        }
+
+        /* ===== 사진 확대 보기(라이트박스) ===== */
+        .lb {
+            position: fixed;
+            inset: 0;
+            z-index: 400;
+            display: none;
+            grid-template-rows: 1fr auto;
+            place-items: center;
+            gap: 14px;
+            padding: 4vh 5vw;
+            background: rgba(5, 8, 16, .93);
+            -webkit-backdrop-filter: blur(6px);
+            backdrop-filter: blur(6px)
+        }
+
+        .lb.open {
+            display: grid
+        }
+
+        .lb img {
+            max-width: 100%;
+            max-height: 84vh;
+            border-radius: 12px;
+            border: 1px solid var(--line);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, .6)
+        }
+
+        .lb .lb-cap {
+            color: var(--muted);
+            font-size: .9rem;
+            text-align: center;
+            max-width: 700px
+        }
+
+        .lb .lb-cap .idx {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--accent);
+            margin-right: 8px
+        }
+
+        .lb button {
+            position: absolute;
+            display: grid;
+            place-items: center;
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            border: 1px solid var(--line);
+            background: rgba(21, 27, 44, .9);
+            color: var(--text);
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: .2s
+        }
+
+        .lb button:hover {
+            background: var(--card-hover);
+            border-color: rgba(79, 124, 255, .5)
+        }
+
+        .lb .lb-close {
+            top: 18px;
+            right: 18px
+        }
+
+        .lb .lb-prev {
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%)
+        }
+
+        .lb .lb-next {
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%)
+        }
+
+        @media(max-width:600px) {
+
+            .lb .lb-prev,
+            .lb .lb-next {
+                top: auto;
+                bottom: 16px;
+                transform: none
+            }
+
+            .lb .lb-next {
+                right: 18px
+            }
+
+            .lb .lb-cap {
+                font-size: .82rem;
+                padding-bottom: 56px
+            }
         }
 
         .badge-2026 {
@@ -2159,26 +2555,50 @@
                     <span style="font-size:1rem;font-weight:500;color:var(--muted)">교육청 지정 AI 중점학교로서 인공지능 기반 교육 · 최첨단
                         기자재 · 체험 프로그램을 운영합니다.</span>
                 </div>
+                <div class="cap">2026 부산 AI 교육박람회 · 부일전자디자인고 전시부스</div>
             </div>
 
             <div class="grid3">
                 <div class="card reveal">
+                    <img class="ph" data-full="images/lg/ai-generative.webp" src="images/ai-generative.webp" width="900" height="507" loading="lazy"
+                        decoding="async"
+                        alt="생성형 AI반 전시 부스 — 학생들이 AI로 제작한 이미지 작품 액자와 AI 생성 영상 상영 화면" />
                     <h3>생성형 AI반</h3>
-                    <p>AI를 활용한 이미지,동영상등 디지털 콘텐츠를 제작 능력을 집중 배양</p>
-                    <div style="margin-top:14px"><span class="tag">Algorithm</span><span class="tag">PS</span></div>
+                    <p>AI를 활용한 이미지, 동영상 등 디지털 콘텐츠 제작 능력을 집중 배양합니다.</p>
+                    <div style="margin-top:14px"><span class="tag">Image</span><span class="tag">Video</span><span
+                            class="tag">Content</span></div>
                 </div>
                 <div class="card reveal">
-                    <h3>AI코딩반</h3>
+                    <img class="ph" data-full="images/lg/ai-coding.webp" src="images/ai-coding.webp" width="900" height="507" loading="lazy"
+                        decoding="async" alt="바이브 코딩반 전시 부스 — 학생들이 개발한 웹 서비스 화면과 코드가 띄워진 노트북·모니터" />
+                    <h3>바이브 코딩반</h3>
                     <p>실제 서비스가 가능한 웹·앱을 기획부터 배포까지 직접 개발하는 프로젝트반입니다.</p>
                     <div style="margin-top:14px"><span class="tag">Web</span><span class="tag">App</span><span
                             class="tag">Startup</span></div>
                 </div>
                 <div class="card reveal">
-                    <h3>AI 메이커스반</h3>
+                    <img class="ph" data-full="images/lg/ai-maker.webp" src="images/ai-maker.webp" width="900" height="507" loading="lazy"
+                        decoding="async" alt="피지컬 AI반 전시 부스 — 학생들이 제작한 AI 과일 선별기와 스마트팜 모형" />
+                    <h3>피지컬 AI반</h3>
                     <p>인공지능 모델 설계와 피지컬 컴퓨팅을 융합해 창의적인 메이커 프로젝트를 완성합니다.</p>
                     <div style="margin-top:14px"><span class="tag">AI</span><span class="tag">IoT</span><span
                             class="tag">Maker</span></div>
                 </div>
+            </div>
+
+            <div class="ai-strip reveal">
+                <img data-full="images/lg/expo-1.webp" src="images/expo-1.webp" width="560" height="315" loading="lazy" decoding="async"
+                    alt="박람회 부스에서 관람객에게 전시물을 안내하는 학생들" />
+                <img data-full="images/lg/expo-2.webp" src="images/expo-2.webp" width="560" height="315" loading="lazy" decoding="async"
+                    alt="노트북으로 직접 만든 작품을 시연하는 학생" />
+                <img data-full="images/lg/expo-3.webp" src="images/expo-3.webp" width="560" height="315" loading="lazy" decoding="async"
+                    alt="관람객으로 붐비는 부일전자디자인고 전시부스" />
+                <img data-full="images/lg/expo-4.webp" src="images/expo-4.webp" width="560" height="315" loading="lazy" decoding="async"
+                    alt="AI 이모티콘 만들기 체험활동 안내 부스" />
+                <img data-full="images/lg/expo-5.webp" src="images/expo-5.webp" width="560" height="322" loading="lazy" decoding="async"
+                    alt="부일전자디자인고 K-G40 전시부스 전경" />
+                <img data-full="images/lg/expo-6.webp" src="images/expo-6.webp" width="560" height="315" loading="lazy" decoding="async"
+                    alt="박람회 참가 학생들과 교직원 단체 기념사진" />
             </div>
 
         </div>
@@ -2279,19 +2699,19 @@
         <div class="wrap">
             <div class="reveal">
                 <h2 class="title">수업을 넘어, 실전으로 성장하는 교육활동</h2>
-                <p class="lead">취업 맞춤반과 동아리반 운영, 각종 개발 대회 도전, 선도학교 프로그램으로 실무 감각을 키웁니다.</p>
+                <p class="lead">취업 맞춤반과 전공동아리반, 각종 경진대회 도전, 그리고 직접 고르는 학점제 선택 수업으로 실무 감각을 키웁니다.</p>
             </div>
 
             <div class="grid3">
                 <div class="card reveal">
                     <div class="ic">🎯</div>
-                    <h3>취업 맞춤반 &amp; 동아리반</h3>
+                    <h3>취업 맞춤반 &amp; 전공동아리반</h3>
                     <p>진로에 맞춘 취업 맞춤반과 관심사가 모인 동아리반을 운영해, 프로젝트 중심으로 실무 역량을 키웁니다.</p>
                     <div style="margin-top:14px"><span class="tag">Career</span><span class="tag">Club</span></div>
                 </div>
                 <div class="card reveal">
                     <div class="ic">🏆</div>
-                    <h3>전국 개발 대회 도전</h3>
+                    <h3>각종 경진 대회 도전</h3>
                     <p>스마틴앱챌린지, 해카톤 등 다양한 앱·소프트웨어 개발 대회에 도전하며 기획부터 개발까지 실력을 검증합니다.</p>
                     <div style="margin-top:14px"><span class="tag">스마틴앱챌린지</span><span class="tag">해카톤</span></div>
                 </div>
@@ -2300,6 +2720,51 @@
                     <h3>소프트웨어교육 선도학교</h3>
                     <p>2016년부터 소프트웨어교육 선도학교를 운영하며 쌓아온 노하우로 체계적인 SW 교육을 이어갑니다.</p>
                     <div style="margin-top:14px"><span class="tag">SW 선도학교</span><span class="tag">Since 2016</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="credit-head reveal">
+                <h3>학점제 선택 수업</h3>
+                <p class="note">2·3학년 공통 · 세 과목 중 <b>한 과목 선택(6단위)</b> · 전단지를 누르면 수업 내용을 자세히 볼 수 있습니다.</p>
+            </div>
+
+            <div class="credit">
+                <div class="subj reveal">
+                    <img class="flyer" data-full="images/lg/credit-web.webp" src="images/credit-web.webp" width="300" height="424" loading="lazy"
+                        decoding="async" alt="웹디자인 학점제 수업 내용 안내 전단지" />
+                    <div class="body">
+                        <h4>웹디자인</h4>
+                        <div class="kind">컴퓨터과 단독 · 프론트엔드</div>
+                        <p>HTML·CSS로 웹 페이지의 구조와 디자인을 만들고, Flex·Grid 반응형 레이아웃과 jQuery 동적 기능까지 구현합니다. Figma로 시안을 잡아 완성한 사이트를 실제
+                            인터넷에 배포합니다.</p>
+                        <div style="margin-top:10px"><span class="tag">HTML</span><span class="tag">CSS</span><span
+                                class="tag">jQuery</span></div>
+                    </div>
+                </div>
+
+                <div class="subj reveal">
+                    <img class="flyer" data-full="images/lg/credit-app.webp" src="images/credit-app.webp" width="300" height="424" loading="lazy"
+                        decoding="async" alt="앱개발 학점제 수업 내용 안내 전단지" />
+                    <div class="body">
+                        <h4>앱개발</h4>
+                        <div class="kind">컴퓨터과 단독 · 안드로이드</div>
+                        <p>Kotlin으로 안드로이드 앱을 직접 개발합니다. 화면 구성과 위젯·이벤트 처리, SQLite 데이터 저장, 외부 API 연동을 익히고 팀 프로젝트로 앱을 완성해 스토어
+                            배포까지 경험합니다.</p>
+                        <div style="margin-top:10px"><span class="tag">Kotlin</span><span class="tag">Android</span><span
+                                class="tag">SQLite</span></div>
+                    </div>
+                </div>
+
+                <div class="subj reveal">
+                    <div class="noflyer" aria-hidden="true"><span class="em">🎨</span><span class="lbl">디자인과<br>공동수업</span></div>
+                    <div class="body">
+                        <h4>편집디자인</h4>
+                        <div class="kind share">디자인과 학생들과 함께</div>
+                        <p>세 과목 중 유일하게 디자인과 학생들과 한 교실에서 배우는 과목입니다. 인쇄·편집 디자인 실무를 익히면서, 전공이 다른 친구들과 함께 작업하는 협업 경험을
+                            쌓습니다.</p>
+                        <div style="margin-top:10px"><span class="tag">편집·인쇄</span><span class="tag">학과 공동</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -2461,6 +2926,15 @@
     </footer>
 
 
+    <!-- 사진 확대 보기 -->
+    <div class="lb" id="lightbox" role="dialog" aria-modal="true" aria-label="사진 확대 보기">
+        <img alt="" />
+        <div class="lb-cap"><span class="idx"></span><span class="txt"></span></div>
+        <button class="lb-prev" type="button" aria-label="이전 사진">‹</button>
+        <button class="lb-next" type="button" aria-label="다음 사진">›</button>
+        <button class="lb-close" type="button" aria-label="닫기">✕</button>
+    </div>
+
     <div class="toast" id="toast">✅ 상담 신청이 접수되었습니다! 곧 연락드릴게요.</div>
 
     <script>
@@ -2532,6 +3006,71 @@
                 btn.disabled = false; btn.textContent = orig;
             }
         });
+
+        // 사진 확대 보기(라이트박스)
+        (() => {
+            const all = Array.from(document.querySelectorAll('[data-full]'));
+            const lb = document.getElementById('lightbox');
+            if (!all.length || !lb) return;
+            // 이전/다음은 같은 섹션 안에서만 순환 (박람회 사진 ↔ 학점제 전단지 섞이지 않게)
+            const groupOf = (el) => (el.closest('section') || document.body).id || '';
+            let items = all;
+
+            const big = lb.querySelector('img');
+            const idxEl = lb.querySelector('.lb-cap .idx');
+            const txtEl = lb.querySelector('.lb-cap .txt');
+            const btnClose = lb.querySelector('.lb-close');
+            let cur = 0, lastFocus = null;
+
+            const show = (i) => {
+                cur = (i + items.length) % items.length;
+                const el = items[cur];
+                big.src = el.dataset.full;
+                big.alt = el.alt;
+                idxEl.textContent = (cur + 1) + ' / ' + items.length;
+                txtEl.textContent = el.alt;
+            };
+
+            const open = (el) => {
+                lastFocus = document.activeElement;
+                const g = groupOf(el);
+                items = all.filter(x => groupOf(x) === g);
+                show(items.indexOf(el));
+                lb.classList.add('open');
+                document.documentElement.style.overflow = 'hidden';
+                btnClose.focus();
+            };
+
+            const close = () => {
+                lb.classList.remove('open');
+                document.documentElement.style.overflow = '';
+                big.removeAttribute('src');
+                if (lastFocus) lastFocus.focus();
+            };
+
+            all.forEach((el) => {
+                el.tabIndex = 0;
+                el.setAttribute('role', 'button');
+                el.addEventListener('click', () => open(el));
+                el.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(el); }
+                });
+            });
+
+            lb.querySelector('.lb-prev').addEventListener('click', (e) => { e.stopPropagation(); show(cur - 1); });
+            lb.querySelector('.lb-next').addEventListener('click', (e) => { e.stopPropagation(); show(cur + 1); });
+            btnClose.addEventListener('click', close);
+            // 사진·버튼 바깥(배경)을 누르면 닫기
+            lb.addEventListener('click', (e) => { if (e.target === lb) close(); });
+
+            addEventListener('keydown', (e) => {
+                if (!lb.classList.contains('open')) return;
+                if (e.key === 'Escape') close();
+                else if (e.key === 'ArrowLeft') show(cur - 1);
+                else if (e.key === 'ArrowRight') show(cur + 1);
+                else if (e.key === 'Tab') { e.preventDefault(); btnClose.focus(); }
+            });
+        })();
 
         /* ===== CODERIX-STYLE EFFECTS ===== */
         // hero mask reveal on load
